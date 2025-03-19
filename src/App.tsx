@@ -1,9 +1,10 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
-import ProtectedRoute from './components/protected-route'
+import ProtectedRoute from './components/guard/protected-route'
 import DashboardLayout from './layouts/dashboard-layout'
 import Dashboard from './pages/dashboard'
 import AuthLayout from './layouts/auth-layout'
 import Login from './pages/auth/login'
+import ProtectedAuthRoute from './components/guard/protected-auth-route'
 
 function App() {
   return (
@@ -22,7 +23,13 @@ function App() {
           <Route index element={<Dashboard />} />
         </Route>
 
-        <Route element={<AuthLayout />}>
+        <Route
+          element={
+            <ProtectedAuthRoute>
+              <AuthLayout />
+            </ProtectedAuthRoute>
+          }
+        >
           <Route path='/login' element={<Login />} />
         </Route>
 
