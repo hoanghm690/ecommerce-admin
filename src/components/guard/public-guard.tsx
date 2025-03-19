@@ -5,8 +5,8 @@ const isAuthenticated = () => {
   return localStorage.getItem('token') ? true : false
 }
 
-function ProtectedRoute({ children }: PropsWithChildren) {
-  return isAuthenticated() ? children : <Navigate to='/login' />
+function PublicGuard({ children }: PropsWithChildren) {
+  return isAuthenticated() ? <Navigate to='/dashboard' /> : children
 }
 
-export default ProtectedRoute
+export default PublicGuard
