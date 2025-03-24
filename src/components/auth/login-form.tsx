@@ -1,9 +1,9 @@
 import React from 'react'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useNavigate } from 'react-router'
+import { LoadingButton } from '../loading-button'
 
 export function LoginForm() {
   const navigate = useNavigate()
@@ -30,9 +30,9 @@ export function LoginForm() {
               <Label htmlFor='password'>Password</Label>
               <Input id='password' type='password' required />
             </div>
-            <Button type='submit' className='w-full'>
+            <LoadingButton type='submit' className='w-full' loading={false}>
               Login
-            </Button>
+            </LoadingButton>
           </div>
         </form>
       </CardContent>

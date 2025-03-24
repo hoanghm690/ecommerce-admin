@@ -1,11 +1,13 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
-import DashboardLayout from './layouts/dashboard-layout'
-import AuthLayout from './layouts/auth-layout'
+import { BrowserRouter, Route, Routes } from 'react-router'
 import PublicGuard from './components/guard/public-guard'
 import PrivateGuard from './components/guard/private-guard'
 import { lazy, Suspense } from 'react'
 import { Loading } from './components/loading'
 import { ThemeProvider } from './components/theme-provider'
+import AuthCheckingGuard from './components/guard/auth-checking-guard'
+
+const DashboardLayout = lazy(() => import('./layouts/dashboard-layout'))
+const AuthLayout = lazy(() => import('./layouts/auth-layout'))
 
 const Dashboard = lazy(() => import('./pages/dashboard'))
 const Login = lazy(() => import('./pages/auth/login'))
@@ -16,16 +18,15 @@ function App() {
       <Suspense fallback={<Loading />}>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Navigate to='/dashboard' replace />} />
+            <Route path='/' element={<AuthCheckingGuard />} />
             <Route
-              path='/dashboard'
               element={
                 <PrivateGuard>
                   <DashboardLayout />
                 </PrivateGuard>
               }
             >
-              <Route index element={<Dashboard />} />
+              <Route path='/dashboard' element={<Dashboard />} />
             </Route>
             <Route
               element={

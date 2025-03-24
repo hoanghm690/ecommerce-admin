@@ -1,12 +1,13 @@
+import { useAuth } from '@/hooks/auth/use-auth'
 import { PropsWithChildren } from 'react'
 import { Navigate } from 'react-router'
-
-const isAuthenticated = () => {
-  return localStorage.getItem('token') ? true : false
-}
+import { Loading } from '../loading'
 
 function PublicGuard({ children }: PropsWithChildren) {
-  return isAuthenticated() ? <Navigate to='/dashboard' /> : children
+  const { isAuthenticated, isLoading } = useAuth()
+
+  if (isLoading) return <Loading />
+  return isAuthenticated ? <Navigate to='/dashboard' /> : children
 }
 
 export default PublicGuard
