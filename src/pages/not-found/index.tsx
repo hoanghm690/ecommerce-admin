@@ -14,7 +14,7 @@ function NotFound() {
             Something's missing.
           </p>
           <p className='mb-8 text-lg font-light text-gray-500 dark:text-gray-400'>
-            Sorry, we can't find that page. You'll find lots to explore on the dashboard page.{' '}
+            Sorry, we can't find that page. You'll find lots to explore on the dashboard page.
           </p>
           <Button asChild>
             <Link to={appRoutes.dashboard}>Back to Dashboard</Link>
