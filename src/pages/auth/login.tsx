@@ -1,22 +1,21 @@
-import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { useNavigate, useSearchParams } from 'react-router'
-import appRoutes from '@/config/routes'
-import storage from '@/lib/storage'
-import { LoadingButton } from '@/components/loading-button'
+import { z } from 'zod'
+import AppForm from '@/components/form-utils/app-form'
+import ControlledInput from '@/components/form-utils/controlled-input'
+import appMessages from '@/config/messages'
+import { useLogin } from '@/hooks/auth/use-login'
+
+const loginFormSchema = z.object({
+  email: z.string().min(1, { message: appMessages.email.required }).email(appMessages.email.invalid),
+  password: z.string().min(1, {
+    message: appMessages.password.required
+  })
+})
+
+export type LoginFormType = z.infer<typeof loginFormSchema>
 
 export default function Login() {
-  const [params] = useSearchParams()
-  const navigate = useNavigate()
-
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    storage.setAccessToken('dummy-access-token')
-    storage.setRefreshToken('dummy-refresh-token')
-    navigate(params.get('continue') || appRoutes.dashboard)
-  }
+  const { handleLogin, isLoading } = useLogin()
 
   return (
     <Card>
@@ -24,21 +23,19 @@ export default function Login() {
         <CardTitle className='text-xl'>Welcome back</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleLogin}>
-          <div className='grid gap-6'>
-            <div className='grid gap-3'>
-              <Label htmlFor='email'>Email</Label>
-              <Input id='email' type='email' placeholder='m@example.com' required />
-            </div>
-            <div className='grid gap-3'>
-              <Label htmlFor='password'>Password</Label>
-              <Input id='password' type='password' required />
-            </div>
-            <LoadingButton type='submit' className='w-full' loading={false}>
-              Login
-            </LoadingButton>
-          </div>
-        </form>
+        <AppForm
+          schema={loginFormSchema}
+          defaultValues={{ email: '', password: '' }}
+          onSubmit={handleLogin}
+          submitButtonProps={{
+            loading: isLoading,
+            className: 'w-full',
+            children: 'Login'
+          }}
+        >
+          <ControlledInput name='email' label='Email*' placeholder='Enter email' disabled={isLoading} />
+          <ControlledInput name='password' label='Password*' placeholder='Enter password' disabled={isLoading} />
+        </AppForm>
       </CardContent>
     </Card>
   )
