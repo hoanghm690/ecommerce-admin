@@ -5,28 +5,32 @@ import { lazy, Suspense } from 'react'
 import { Loading } from './components/loading'
 import { ThemeProvider } from './components/theme-provider'
 import AuthCheckingGuard from './components/guard/auth-checking-guard'
+import appRoutes from './config/routes'
+import ScrollTop from './components/scroll-top'
 
-const DashboardLayout = lazy(() => import('./layouts/dashboard-layout'))
+const AdminLayout = lazy(() => import('./layouts/admin-layout'))
 const AuthLayout = lazy(() => import('./layouts/auth-layout'))
 
 const Dashboard = lazy(() => import('./pages/dashboard'))
 const Login = lazy(() => import('./pages/auth/login'))
+const NotFound = lazy(() => import('./pages/not-found'))
 
 function App() {
   return (
     <ThemeProvider>
       <Suspense fallback={<Loading />}>
         <BrowserRouter>
+          <ScrollTop />
           <Routes>
-            <Route path='/' element={<AuthCheckingGuard />} />
+            <Route path={appRoutes.home} element={<AuthCheckingGuard />} />
             <Route
               element={
                 <PrivateGuard>
-                  <DashboardLayout />
+                  <AdminLayout />
                 </PrivateGuard>
               }
             >
-              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path={appRoutes.dashboard} element={<Dashboard />} />
             </Route>
             <Route
               element={
@@ -35,9 +39,9 @@ function App() {
                 </PublicGuard>
               }
             >
-              <Route path='/login' element={<Login />} />
+              <Route path={appRoutes.login} element={<Login />} />
             </Route>
-            <Route path='*' element={<h1>404 - Not Found</h1>} />
+            <Route path={appRoutes.notFound} element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </Suspense>

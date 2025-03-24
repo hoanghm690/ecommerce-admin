@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router'
 import { useAuth } from './use-auth'
+import appRoutes from '@/config/routes'
 
 export function useLogout() {
   const navigate = useNavigate()
@@ -8,7 +9,7 @@ export function useLogout() {
   const handleLogout = () => {
     localStorage.removeItem('token')
     setIsAuthenticated(false)
-    navigate('/login')
+    navigate(appRoutes.login)
   }
 
   return {

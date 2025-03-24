@@ -2,16 +2,18 @@ import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useNavigate } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import { LoadingButton } from '../loading-button'
+import appRoutes from '@/config/routes'
 
 export function LoginForm() {
+  const [params] = useSearchParams()
   const navigate = useNavigate()
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     localStorage.setItem('token', 'dummy-token')
-    navigate('/dashboard')
+    navigate(params.get('continue') || appRoutes.dashboard)
   }
 
   return (
