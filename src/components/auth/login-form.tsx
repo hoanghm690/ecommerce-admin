@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label'
 import { useNavigate, useSearchParams } from 'react-router'
 import { LoadingButton } from '../loading-button'
 import appRoutes from '@/config/routes'
+import storage from '@/lib/storage'
 
 export function LoginForm() {
   const [params] = useSearchParams()
@@ -12,7 +13,8 @@ export function LoginForm() {
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    localStorage.setItem('token', 'dummy-token')
+    storage.setAccessToken('dummy-access-token')
+    storage.setRefreshToken('dummy-refresh-token')
     navigate(params.get('continue') || appRoutes.dashboard)
   }
 

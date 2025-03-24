@@ -1,3 +1,4 @@
+import storage from '@/lib/storage'
 import { useEffect, useState } from 'react'
 
 export function useAuth() {
@@ -5,7 +6,7 @@ export function useAuth() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
+    const token = storage.getAccessToken()
     setIsAuthenticated(!!token)
     setIsLoading(false)
   }, [])
