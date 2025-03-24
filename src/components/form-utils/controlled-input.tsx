@@ -2,15 +2,15 @@ import { useFormContext } from 'react-hook-form'
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-type ControlledInputProps = {
+export type ControlledInputProps = {
   name: string
-  label?: string
+  label: string
   placeholder?: string
   description?: string
   disabled?: boolean
 }
 
-function ControlledInput({ name, label = 'Label', placeholder, description, disabled = false }: ControlledInputProps) {
+function ControlledInput({ name, label, placeholder, description, disabled = false }: ControlledInputProps) {
   const { control } = useFormContext()
 
   return (
