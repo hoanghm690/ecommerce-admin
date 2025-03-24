@@ -10,7 +10,7 @@ const AdminLayout = lazy(() => import('@/layouts/admin-layout'))
 const AuthLayout = lazy(() => import('@/layouts/auth-layout'))
 
 const Dashboard = lazy(() => import('@/pages/dashboard'))
-const Login = lazy(() => import('@/pages/auth/login'))
+const Login = lazy(() => import('@/pages/login'))
 const NotFound = lazy(() => import('@/pages/not-found'))
 
 function AppRoutes() {

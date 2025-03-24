@@ -1,6 +1,6 @@
 import appRoutes from '@/config/routes'
 import storage from '@/lib/storage'
-import { LoginFormType } from '@/pages/auth/login'
+import { LoginFormType } from '@/pages/login'
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 
