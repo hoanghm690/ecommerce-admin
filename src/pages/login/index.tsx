@@ -9,6 +9,7 @@ import ControlledCheckboxMultiple from '@/components/form-utils/controlled-check
 import ControlledRadioGroup from '@/components/form-utils/controlled-radio-group'
 import ControlledSelect from '@/components/form-utils/controlled-select'
 import ControlledSelectGroup from '@/components/form-utils/controlled-select-group'
+import ControlledSwitch from '@/components/form-utils/controlled-switch'
 
 const items = [
   {
@@ -143,7 +144,8 @@ const loginFormSchema = z.object({
     .email(),
   timezone: z.string({
     required_error: 'Please select a timezone to display.'
-  })
+  }),
+  marketing_emails: z.boolean().default(false).optional()
 })
 
 export type LoginFormType = z.infer<typeof loginFormSchema>
@@ -159,7 +161,7 @@ export default function Login() {
       <CardContent>
         <AppForm
           schema={loginFormSchema}
-          defaultValues={{ email: '', password: '', checkbox: false, items: [] }}
+          defaultValues={{ email: '', password: '', checkbox: false, items: [], marketing_emails: false }}
           onSubmit={handleLogin}
           submitButtonProps={{
             loading: isLoading,
@@ -201,6 +203,12 @@ export default function Login() {
             label='Timezone'
             placeholder='Select a timezone'
             options={timezones}
+            disabled={isLoading}
+          />
+          <ControlledSwitch
+            name='marketing_emails'
+            label='Marketing emails'
+            description='Receive emails about new products, features, and more.'
             disabled={isLoading}
           />
         </AppForm>
