@@ -10,6 +10,7 @@ import ControlledRadioGroup from '@/components/form-utils/controlled-radio-group
 import ControlledSelect from '@/components/form-utils/controlled-select'
 import ControlledSelectGroup from '@/components/form-utils/controlled-select-group'
 import ControlledSwitch from '@/components/form-utils/controlled-switch'
+import ControlledTextarea from '@/components/form-utils/controlled-textarea'
 
 const items = [
   {
@@ -145,7 +146,15 @@ const loginFormSchema = z.object({
   timezone: z.string({
     required_error: 'Please select a timezone to display.'
   }),
-  marketing_emails: z.boolean().default(false).optional()
+  marketing_emails: z.boolean().default(false).optional(),
+  bio: z
+    .string()
+    .min(10, {
+      message: 'Bio must be at least 10 characters.'
+    })
+    .max(30, {
+      message: 'Bio must not be longer than 30 characters.'
+    })
 })
 
 export type LoginFormType = z.infer<typeof loginFormSchema>
@@ -161,7 +170,7 @@ export default function Login() {
       <CardContent>
         <AppForm
           schema={loginFormSchema}
-          defaultValues={{ email: '', password: '', checkbox: false, items: [], marketing_emails: false }}
+          defaultValues={{ email: '', password: '', checkbox: false, items: [], marketing_emails: false, bio: '' }}
           onSubmit={handleLogin}
           submitButtonProps={{
             loading: isLoading,
@@ -210,6 +219,12 @@ export default function Login() {
             label='Marketing emails'
             description='Receive emails about new products, features, and more.'
             disabled={isLoading}
+          />
+          <ControlledTextarea
+            name='bio'
+            label='Bio'
+            placeholder='Tell us a little bit about yourself'
+            description='You can @mention other users and organizations.'
           />
         </AppForm>
       </CardContent>
