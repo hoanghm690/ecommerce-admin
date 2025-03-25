@@ -2,12 +2,12 @@ import { useFormContext } from 'react-hook-form'
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
-type SelectOption = {
+export type SelectOption = {
   value: string
   label: string
 }
 
-type ControlledSelectProps = {
+export type ControlledSelectProps = {
   name: string
   label: string
   placeholder?: string
