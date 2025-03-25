@@ -7,6 +7,7 @@ import { useLogin } from '@/hooks/auth/use-login'
 import ControlledCheckboxSingle from '@/components/form-utils/controlled-checkbox-single'
 import ControlledCheckboxMultiple from '@/components/form-utils/controlled-checkbox-multiple'
 import ControlledRadioGroup from '@/components/form-utils/controlled-radio-group'
+import ControlledSelect from '@/components/form-utils/controlled-select'
 
 const items = [
   {
@@ -50,6 +51,21 @@ const radioGroupOptions = [
   }
 ]
 
+const selectOptions = [
+  {
+    value: 'm@example.com',
+    label: 'm@example.com'
+  },
+  {
+    value: 'm@google.com',
+    label: 'm@google.com'
+  },
+  {
+    value: 'm@support.com',
+    label: 'm@support.com'
+  }
+]
+
 const loginFormSchema = z.object({
   email: z.string().min(1, { message: appMessages.email.required }).email(appMessages.email.invalid),
   password: z.string().min(1, {
@@ -63,7 +79,12 @@ const loginFormSchema = z.object({
   }),
   type: z.enum(['all', 'mentions', 'none'], {
     required_error: 'You need to select a notification type.'
-  })
+  }),
+  email2: z
+    .string({
+      required_error: 'Please select an email to display.'
+    })
+    .email()
 })
 
 export type LoginFormType = z.infer<typeof loginFormSchema>
@@ -100,8 +121,22 @@ export default function Login() {
             label='Sidebar'
             description='Select the items you want to display in the sidebar.'
             options={items}
+            disabled={isLoading}
           />
-          <ControlledRadioGroup name='type' label='Notify me about...' options={radioGroupOptions} />
+          <ControlledRadioGroup
+            name='type'
+            label='Notify me about...'
+            options={radioGroupOptions}
+            disabled={isLoading}
+          />
+          <ControlledSelect
+            name='email2'
+            label='Email'
+            placeholder='Select a verified email to display'
+            description='You can manage email addresses in your email settings.'
+            options={selectOptions}
+            disabled={isLoading}
+          />
         </AppForm>
       </CardContent>
     </Card>
