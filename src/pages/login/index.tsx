@@ -12,30 +12,31 @@ import ControlledSelectGroup from '@/components/form-utils/controlled-select-gro
 import ControlledSwitch from '@/components/form-utils/controlled-switch'
 import ControlledTextarea from '@/components/form-utils/controlled-textarea'
 import ControlledCombobox from '@/components/form-utils/controlled-combobox'
+import ControlledDatePicker from '@/components/form-utils/controlled-date-picker'
 
 const items = [
   {
-    id: 'recents',
+    value: 'recents',
     label: 'Recents'
   },
   {
-    id: 'home',
+    value: 'home',
     label: 'Home'
   },
   {
-    id: 'applications',
+    value: 'applications',
     label: 'Applications'
   },
   {
-    id: 'desktop',
+    value: 'desktop',
     label: 'Desktop'
   },
   {
-    id: 'downloads',
+    value: 'downloads',
     label: 'Downloads'
   },
   {
-    id: 'documents',
+    value: 'documents',
     label: 'Documents'
   }
 ]
@@ -170,6 +171,9 @@ const loginFormSchema = z.object({
     }),
   language: z.string({
     required_error: 'Please select a language.'
+  }),
+  dob: z.date({
+    required_error: 'A date of birth is required.'
   })
 })
 
@@ -252,6 +256,15 @@ export default function Login() {
             commandEmptyText='No framework found.'
             options={languages}
             disabled={isLoading}
+          />
+          <ControlledDatePicker
+            name='dob'
+            label='Date of birth'
+            description='Your date of birth is used to calculate your age.'
+            disabled={isLoading}
+            calendarProps={{
+              disabled: (date) => date > new Date() || date < new Date('1900-01-01')
+            }}
           />
         </AppForm>
       </CardContent>

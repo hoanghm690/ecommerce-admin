@@ -1,17 +1,14 @@
 import { useFormContext } from 'react-hook-form'
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Checkbox } from '@/components/ui/checkbox'
+import { ControlledInputProps } from './controlled-input'
 
-type CheckboxOption = {
-  id: string
+export type CheckboxOption = {
+  value: string
   label: string
 }
 
-type ControlledCheckboxMultipleProps = {
-  name: string
-  label: string
-  description?: string
-  disabled?: boolean
+type ControlledCheckboxMultipleProps = Omit<ControlledInputProps, 'placeholder'> & {
   options: CheckboxOption[]
 }
 
@@ -30,20 +27,20 @@ function ControlledCheckboxMultiple({ name, label, description, disabled, option
           </div>
           {options.map((options) => (
             <FormField
-              key={options.id}
+              key={options.value}
               control={control}
               name={name}
               render={({ field }) => {
                 return (
-                  <FormItem key={options.id} className='flex flex-row items-start gap-3'>
+                  <FormItem key={options.value} className='flex flex-row items-start gap-3'>
                     <FormControl>
                       <Checkbox
                         disabled={disabled}
-                        checked={field.value?.includes(options.id)}
+                        checked={field.value?.includes(options.value)}
                         onCheckedChange={(checked) => {
                           return checked
-                            ? field.onChange([...field.value, options.id])
-                            : field.onChange(field.value?.filter((value: string) => value !== options.id))
+                            ? field.onChange([...field.value, options.value])
+                            : field.onChange(field.value?.filter((value: string) => value !== options.value))
                         }}
                       />
                     </FormControl>

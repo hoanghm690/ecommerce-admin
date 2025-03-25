@@ -1,18 +1,14 @@
 import { useFormContext } from 'react-hook-form'
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { ControlledInputProps } from './controlled-input'
 
 export type SelectOption = {
   value: string
   label: string
 }
 
-export type ControlledSelectProps = {
-  name: string
-  label: string
-  placeholder?: string
-  description?: string
-  disabled?: boolean
+export type ControlledSelectProps = ControlledInputProps & {
   options: SelectOption[]
 }
 

@@ -1,16 +1,14 @@
 import { useFormContext } from 'react-hook-form'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { ControlledInputProps } from './controlled-input'
 
 type RadioGroupOption = {
   value: string
   label: string
 }
 
-type ControlledRadioGroupProps = {
-  name: string
-  label: string
-  disabled?: boolean
+type ControlledRadioGroupProps = Omit<ControlledInputProps, 'placeholder' | 'description'> & {
   options: RadioGroupOption[]
 }
 

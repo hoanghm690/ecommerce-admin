@@ -1,13 +1,9 @@
 import { useFormContext } from 'react-hook-form'
 import { FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Switch } from '../ui/switch'
+import { ControlledInputProps } from './controlled-input'
 
-type ControlledSwitchProps = {
-  name: string
-  label: string
-  description?: string
-  disabled?: boolean
-}
+type ControlledSwitchProps = Omit<ControlledInputProps, 'placeholder'>
 
 function ControlledSwitch({ name, label, description, disabled }: ControlledSwitchProps) {
   const { control } = useFormContext()
