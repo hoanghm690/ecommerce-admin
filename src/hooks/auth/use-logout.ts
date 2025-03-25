@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router'
 import { useAuth } from './use-auth'
 import appRoutes from '@/config/routes'
-import storage from '@/lib/storage'
+import storage from '@/utils/storage'
 
 export function useLogout() {
   const navigate = useNavigate()

@@ -1,4 +1,4 @@
-import storage from '@/lib/storage'
+import storage from '@/utils/storage'
 import { useEffect, useState } from 'react'
 
 export function useAuth() {

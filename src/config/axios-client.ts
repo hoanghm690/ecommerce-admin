@@ -1,5 +1,5 @@
 import appEnv from '@/config/env'
-import storage from '@/lib/storage'
+import storage from '@/utils/storage'
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import queryString from 'query-string'
 
