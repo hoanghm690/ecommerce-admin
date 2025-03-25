@@ -6,6 +6,7 @@ import appMessages from '@/config/messages'
 import { useLogin } from '@/hooks/auth/use-login'
 import ControlledCheckboxSingle from '@/components/form-utils/controlled-checkbox-single'
 import ControlledCheckboxMultiple from '@/components/form-utils/controlled-checkbox-multiple'
+import ControlledRadioGroup from '@/components/form-utils/controlled-radio-group'
 
 const items = [
   {
@@ -34,6 +35,21 @@ const items = [
   }
 ]
 
+const radioGroupOptions = [
+  {
+    value: 'all',
+    label: 'All new messages'
+  },
+  {
+    value: 'mentions',
+    label: 'Direct messages and mentions'
+  },
+  {
+    value: 'none',
+    label: 'Nothing'
+  }
+]
+
 const loginFormSchema = z.object({
   email: z.string().min(1, { message: appMessages.email.required }).email(appMessages.email.invalid),
   password: z.string().min(1, {
@@ -44,6 +60,9 @@ const loginFormSchema = z.object({
   }),
   items: z.array(z.string()).refine((value) => value.some((item) => item), {
     message: appMessages.selection.required
+  }),
+  type: z.enum(['all', 'mentions', 'none'], {
+    required_error: 'You need to select a notification type.'
   })
 })
 
@@ -68,8 +87,8 @@ export default function Login() {
             children: 'Login'
           }}
         >
-          <ControlledInput name='email' label='Email*' placeholder='Enter email' disabled={isLoading} />
-          <ControlledInput name='password' label='Password*' placeholder='Enter password' disabled={isLoading} />
+          <ControlledInput name='email' label='Email' placeholder='Enter email' disabled={isLoading} />
+          <ControlledInput name='password' label='Password' placeholder='Enter password' disabled={isLoading} />
           <ControlledCheckboxSingle
             name='checkbox'
             label='Accept terms and conditions'
@@ -82,6 +101,7 @@ export default function Login() {
             description='Select the items you want to display in the sidebar.'
             options={items}
           />
+          <ControlledRadioGroup name='type' label='Notify me about...' options={radioGroupOptions} />
         </AppForm>
       </CardContent>
     </Card>
