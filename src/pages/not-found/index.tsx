@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import appRoutes from '@/config/routes'
+import { RoutePaths } from '@/utils/routes-constants'
 import { Link } from 'react-router'
 
 function NotFound() {
@@ -15,7 +15,7 @@ function NotFound() {
             Sorry, we can't find that page. You'll find lots to explore on the dashboard page.
           </p>
           <Button asChild>
-            <Link to={appRoutes.dashboard}>Back to Dashboard</Link>
+            <Link to={RoutePaths.DASHBOARD}>Back to Dashboard</Link>
           </Button>
         </div>
       </div>

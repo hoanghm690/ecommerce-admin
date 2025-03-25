@@ -1,8 +1,8 @@
-import appRoutes from '@/config/routes'
 import storage from '@/utils/storage'
 import { LoginFormType } from '@/pages/login'
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
+import { RoutePaths } from '@/utils/routes-constants'
 
 export function useLogin() {
   const navigate = useNavigate()
@@ -14,7 +14,7 @@ export function useLogin() {
     setIsLoading(true)
     storage.setAccessToken('dummy-access-token')
     storage.setRefreshToken('dummy-refresh-token')
-    navigate(params.get('continue') || appRoutes.dashboard)
+    navigate(params.get('continue') || RoutePaths.DASHBOARD)
     setIsLoading(false)
   }
 

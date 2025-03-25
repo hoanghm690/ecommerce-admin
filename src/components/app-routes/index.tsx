@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { lazy } from 'react'
 import ScrollTop from '@/components/scroll-top'
-import appRoutes from '@/config/routes'
 import AuthCheckingGuard from '@/components/guard/auth-checking-guard'
 import PrivateGuard from '@/components/guard/private-guard'
 import PublicGuard from '@/components/guard/public-guard'
+import { RoutePaths } from '@/utils/routes-constants'
 
 const AdminLayout = lazy(() => import('@/layouts/admin-layout'))
 const AuthLayout = lazy(() => import('@/layouts/auth-layout'))
@@ -18,7 +18,7 @@ function AppRoutes() {
     <BrowserRouter>
       <ScrollTop />
       <Routes>
-        <Route path={appRoutes.home} element={<AuthCheckingGuard />} />
+        <Route path={RoutePaths.HOME} element={<AuthCheckingGuard />} />
         <Route
           element={
             <PrivateGuard>
@@ -26,7 +26,7 @@ function AppRoutes() {
             </PrivateGuard>
           }
         >
-          <Route path={appRoutes.dashboard} element={<Dashboard />} />
+          <Route path={RoutePaths.DASHBOARD} element={<Dashboard />} />
         </Route>
         <Route
           element={
@@ -35,9 +35,9 @@ function AppRoutes() {
             </PublicGuard>
           }
         >
-          <Route path={appRoutes.login} element={<Login />} />
+          <Route path={RoutePaths.LOGIN} element={<Login />} />
         </Route>
-        <Route path={appRoutes.notFound} element={<NotFound />} />
+        <Route path={RoutePaths.NOT_FOUND} element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )

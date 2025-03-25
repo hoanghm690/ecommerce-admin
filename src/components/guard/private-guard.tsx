@@ -2,7 +2,7 @@ import { useAuth } from '@/hooks/auth/use-auth'
 import { PropsWithChildren } from 'react'
 import { Navigate, useLocation } from 'react-router'
 import { Loading } from '../loading'
-import appRoutes from '@/config/routes'
+import { RoutePaths } from '@/utils/routes-constants'
 
 function PrivateGuard({ children }: PropsWithChildren) {
   const location = useLocation()
@@ -12,7 +12,7 @@ function PrivateGuard({ children }: PropsWithChildren) {
 
   if (!isAuthenticated) {
     const path = encodeURIComponent(location.pathname)
-    return <Navigate to={`${appRoutes.login}?continue=${path}`} />
+    return <Navigate to={`${RoutePaths.LOGIN}?continue=${path}`} />
   }
 
   return children
