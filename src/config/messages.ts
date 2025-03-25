@@ -5,6 +5,12 @@ const appMessages = {
   },
   password: {
     required: 'Password cannot be empty.'
+  },
+  selection: {
+    required: 'You have to select at least one item.'
+  },
+  termsAndConditions: {
+    required: 'You must agree to Terms & Conditions.'
   }
 }
 
