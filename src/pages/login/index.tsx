@@ -11,6 +11,7 @@ import ControlledSelect from '@/components/form-utils/controlled-select'
 import ControlledSelectGroup from '@/components/form-utils/controlled-select-group'
 import ControlledSwitch from '@/components/form-utils/controlled-switch'
 import ControlledTextarea from '@/components/form-utils/controlled-textarea'
+import ControlledCombobox from '@/components/form-utils/controlled-combobox'
 
 const items = [
   {
@@ -124,6 +125,18 @@ const timezones = [
   }
 ]
 
+const languages = [
+  { label: 'English', value: 'en' },
+  { label: 'French', value: 'fr' },
+  { label: 'German', value: 'de' },
+  { label: 'Spanish', value: 'es' },
+  { label: 'Portuguese', value: 'pt' },
+  { label: 'Russian', value: 'ru' },
+  { label: 'Japanese', value: 'ja' },
+  { label: 'Korean', value: 'ko' },
+  { label: 'Chinese', value: 'zh' }
+]
+
 const loginFormSchema = z.object({
   email: z.string().min(1, { message: appMessages.email.required }).email(appMessages.email.invalid),
   password: z.string().min(1, {
@@ -154,7 +167,10 @@ const loginFormSchema = z.object({
     })
     .max(30, {
       message: 'Bio must not be longer than 30 characters.'
-    })
+    }),
+  language: z.string({
+    required_error: 'Please select a language.'
+  })
 })
 
 export type LoginFormType = z.infer<typeof loginFormSchema>
@@ -225,6 +241,17 @@ export default function Login() {
             label='Bio'
             placeholder='Tell us a little bit about yourself'
             description='You can @mention other users and organizations.'
+            disabled={isLoading}
+          />
+          <ControlledCombobox
+            name='language'
+            label='Language'
+            placeholder='Select language'
+            description='This is the language that will be used in the dashboard.'
+            commandPlaceholder='Search framework...'
+            commandEmptyText='No framework found.'
+            options={languages}
+            disabled={isLoading}
           />
         </AppForm>
       </CardContent>
