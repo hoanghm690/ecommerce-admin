@@ -1,15 +1,24 @@
 import appEnv from '@/config/env'
 import storage from '@/utils/storage'
-import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
+import axios, { AxiosResponse, CreateAxiosDefaults, InternalAxiosRequestConfig } from 'axios'
 import queryString from 'query-string'
 
-const axiosClient = axios.create({
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean
+}
+
+const baseConfig: CreateAxiosDefaults = {
   baseURL: appEnv.apiUrl,
   headers: {
     'Content-Type': 'application/json'
   },
-  paramsSerializer: (params) => queryString.stringify(params)
-})
+  paramsSerializer: (params) => queryString.stringify(params),
+  withCredentials: true
+}
+
+export const instanceWithoutInterceptors = axios.create(baseConfig)
+
+export const instance = axios.create(baseConfig)
 
 let isRefreshing = false
 let failedQueue: { resolve: (value: unknown) => void; reject: (reason?: unknown) => void }[] = []
@@ -28,7 +37,7 @@ const processQueue = (error: unknown, token: string | null = null) => {
 }
 
 // Request Interceptor: Attach the access token to the request headers
-axiosClient.interceptors.request.use(
+instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = storage.getAccessToken()
     if (token) {
@@ -42,10 +51,10 @@ axiosClient.interceptors.request.use(
 )
 
 // Response Interceptor: Handle errors & refresh token if necessary
-axiosClient.interceptors.response.use(
+instance.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error) => {
-    const originalRequest = error.config
+    const originalRequest: CustomAxiosRequestConfig | undefined = error.config
 
     // Handle 401 (Unauthorized)
     if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {
@@ -56,7 +65,8 @@ axiosClient.interceptors.response.use(
             failedQueue.push({ resolve, reject })
           })
           originalRequest.headers.Authorization = `Bearer ${token}`
-          return await axiosClient(originalRequest)
+
+          return await instance(originalRequest)
         } catch (err) {
           return await Promise.reject(err)
         }
@@ -79,7 +89,8 @@ axiosClient.interceptors.response.use(
         processQueue(null, data.accessToken)
 
         originalRequest.headers.Authorization = `Bearer ${data.accessToken}`
-        return axiosClient(originalRequest)
+
+        return instance(originalRequest)
       } catch (err) {
         processQueue(err, null)
         storage.clearAuth() // Clear authentication if refresh token fails
@@ -102,5 +113,3 @@ axiosClient.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
-export default axiosClient
