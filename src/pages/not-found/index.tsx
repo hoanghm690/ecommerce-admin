@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { RoutePaths } from '@/utils/routes-constants'
+import { RoutePaths } from '@/constants'
 import { Link } from 'react-router'
 
 function NotFound() {

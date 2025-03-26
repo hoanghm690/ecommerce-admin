@@ -1,16 +1,13 @@
-import { useNavigate } from 'react-router'
-import { useAuth } from './use-auth'
-import storage from '@/utils/storage'
-import { RoutePaths } from '@/utils/routes-constants'
+import { useAuthContext } from '@/providers/auth'
 
 export function useLogout() {
-  const navigate = useNavigate()
-  const { setIsAuthenticated } = useAuth()
+  const {
+    authProvider: { logout },
+    setAuthState
+  } = useAuthContext()
 
   const handleLogout = () => {
-    storage.clearAuth()
-    setIsAuthenticated(false)
-    navigate(RoutePaths.LOGIN)
+    logout(setAuthState)
   }
 
   return {

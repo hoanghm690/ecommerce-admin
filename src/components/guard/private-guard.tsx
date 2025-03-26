@@ -1,21 +1,20 @@
-import { useAuth } from '@/hooks/auth/use-auth'
-import { PropsWithChildren } from 'react'
-import { Navigate, useLocation } from 'react-router'
+import { Navigate, Outlet, useLocation } from 'react-router'
 import { Loading } from '../loading'
-import { RoutePaths } from '@/utils/routes-constants'
+import { RoutePaths } from '@/constants'
+import { useAuthContext } from '@/providers/auth'
 
-function PrivateGuard({ children }: PropsWithChildren) {
+function PrivateGuard() {
   const location = useLocation()
-  const { isAuthenticated, isLoading } = useAuth()
+  const { authenticated, loading } = useAuthContext()
 
-  if (isLoading) return <Loading />
+  if (loading) return <Loading />
 
-  if (!isAuthenticated) {
+  if (!authenticated) {
     const path = encodeURIComponent(location.pathname)
-    return <Navigate to={`${RoutePaths.LOGIN}?continue=${path}`} />
+    return <Navigate to={`${RoutePaths.LOGIN}?continue=${path}`} replace />
   }
 
-  return children
+  return <Outlet />
 }
 
 export default PrivateGuard

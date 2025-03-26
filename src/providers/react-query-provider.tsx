@@ -1,9 +1,9 @@
-import { queryClient } from '@/config/query-client'
+import { queryClient } from '@/lib/config/query-client'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { PropsWithChildren } from 'react'
+import { ReactNode } from 'react'
 
-function ReactQueryProvider({ children }: PropsWithChildren) {
+function ReactQueryProvider({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}

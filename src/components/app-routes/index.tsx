@@ -4,7 +4,7 @@ import ScrollTop from '@/components/scroll-top'
 import AuthCheckingGuard from '@/components/guard/auth-checking-guard'
 import PrivateGuard from '@/components/guard/private-guard'
 import PublicGuard from '@/components/guard/public-guard'
-import { RoutePaths } from '@/utils/routes-constants'
+import { RoutePaths } from '@/constants'
 
 const AdminLayout = lazy(() => import('@/layouts/admin-layout'))
 const AuthLayout = lazy(() => import('@/layouts/auth-layout'))
@@ -19,23 +19,15 @@ function AppRoutes() {
       <ScrollTop />
       <Routes>
         <Route path={RoutePaths.HOME} element={<AuthCheckingGuard />} />
-        <Route
-          element={
-            <PrivateGuard>
-              <AdminLayout />
-            </PrivateGuard>
-          }
-        >
-          <Route path={RoutePaths.DASHBOARD} element={<Dashboard />} />
+        <Route element={<PrivateGuard />}>
+          <Route element={<AdminLayout />}>
+            <Route path={RoutePaths.DASHBOARD} element={<Dashboard />} />
+          </Route>
         </Route>
-        <Route
-          element={
-            <PublicGuard>
-              <AuthLayout />
-            </PublicGuard>
-          }
-        >
-          <Route path={RoutePaths.LOGIN} element={<Login />} />
+        <Route element={<PublicGuard />}>
+          <Route element={<AuthLayout />}>
+            <Route path={RoutePaths.LOGIN} element={<Login />} />
+          </Route>
         </Route>
         <Route path={RoutePaths.NOT_FOUND} element={<NotFound />} />
       </Routes>

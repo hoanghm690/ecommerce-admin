@@ -1,4 +1,4 @@
-const appMessages = {
+export const AppMessages = {
   email: {
     required: 'Please enter your email.',
     invalid: 'Please enter a valid email address.'
@@ -13,5 +13,3 @@ const appMessages = {
     required: 'You must agree to Terms & Conditions.'
   }
 }
-
-export default appMessages
