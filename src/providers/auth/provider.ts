@@ -25,7 +25,8 @@ export const authProvider: AuthProvider = {
     const user: User = {
       id: 1,
       email: 'admin@example.com',
-      name: 'Admin'
+      first_name: 'Super',
+      last_name: 'Admin'
     }
     return { ...user }
   }
