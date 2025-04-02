@@ -50,7 +50,8 @@ export default tseslint.config(
           varsIgnorePattern: '^_',
           ignoreRestSiblings: true
         }
-      ]
+      ],
+      '@typescript-eslint/no-explicit-any': 'warn'
     }
   }
 )
