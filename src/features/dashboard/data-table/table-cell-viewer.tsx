@@ -1,5 +1,5 @@
 import { useIsMobile } from '@/hooks/use-mobile'
-import { DashboardType } from './data-table'
+import { DashboardType } from '.'
 import { IconTrendingUp } from '@tabler/icons-react'
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts'
 import { Button } from '@/components/ui/button'
