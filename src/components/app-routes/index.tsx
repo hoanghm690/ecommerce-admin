@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router'
+import { Route, Routes } from 'react-router'
 import { lazy } from 'react'
 import ScrollTop from '@/components/scroll-top'
 import AuthCheckingGuard from '@/components/guard/auth-checking-guard'
@@ -15,7 +15,7 @@ const NotFound = lazy(() => import('@/pages/not-found'))
 
 function AppRoutes() {
   return (
-    <BrowserRouter>
+    <>
       <ScrollTop />
       <Routes>
         <Route path={RoutePaths.HOME} element={<AuthCheckingGuard />} />
@@ -31,7 +31,7 @@ function AppRoutes() {
         </Route>
         <Route path={RoutePaths.NOT_FOUND} element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </>
   )
 }
 
