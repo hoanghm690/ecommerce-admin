@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { DefaultValues, FieldValues, SubmitHandler, useForm, UseFormReturn } from 'react-hook-form'
 import { ZodType, ZodTypeDef } from 'zod'
 import { Form } from '@/components/ui/form'
-import { LoadingButton, LoadingButtonProps } from '../loading-button'
+import { LoadingButton, LoadingButtonProps } from '@/components/common/loading-button'
 
 interface AppFormProps<T extends FieldValues> {
   schema: ZodType<T, ZodTypeDef, T>
