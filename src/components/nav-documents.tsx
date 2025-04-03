@@ -13,9 +13,9 @@ import {
   SidebarMenu,
   SidebarMenuAction,
   SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar
+  SidebarMenuItem
 } from '@/components/ui/sidebar'
+import { useSidebar } from '@/providers/sidebar-provider'
 
 export function NavDocuments({
   items

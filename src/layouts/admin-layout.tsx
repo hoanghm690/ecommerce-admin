@@ -1,13 +1,24 @@
 import { AppSidebar } from '@/components/app-sidebar'
 import { ModeToggle } from '@/components/mode-toggle'
 import { SiteHeader } from '@/components/site-header'
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import { SidebarInset } from '@/components/ui/sidebar'
+import { SIDEBAR_COOKIE_NAME } from '@/constants'
+import { SidebarProvider } from '@/providers/sidebar-provider'
+import { useState } from 'react'
 import { Outlet } from 'react-router'
 
-function AdminLayout() {
+const getCookieValue = (name: string, defaultValue = true) => {
+  if (typeof document === 'undefined') return defaultValue
+  const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`))
+  return match ? match[2] === 'true' : defaultValue
+}
+
+export default function AdminLayout() {
+  const [defaultOpen] = useState(() => getCookieValue(SIDEBAR_COOKIE_NAME))
+
   return (
     <>
-      <SidebarProvider>
+      <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar />
         <SidebarInset>
           <SiteHeader />
@@ -24,5 +35,3 @@ function AdminLayout() {
     </>
   )
 }
-
-export default AdminLayout
