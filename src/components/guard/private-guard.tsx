@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from 'react-router'
-import { Loading } from '../loading'
+import { Loading } from '../common/loading'
 import { RoutePaths } from '@/constants'
 import { useAuthContext } from '@/providers/auth'
 
