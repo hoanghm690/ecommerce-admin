@@ -111,30 +111,32 @@ Make sure you have the following installed on your system:
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   \`\`\`sh
-   git clone https://github.com/hoanghm690/ecommerce-admin.git
-   \`\`\`
-3. Install NPM packages
-   \`\`\`sh
-   npm install
-   \`\`\`
-4. Find the `.env.example` file in your project directory.
-5. Create a new `.env.local` file in the same directory as `.env.example` if it doesn't already exist
-6. Add the necessary environment variable to `.env.local`: Open `.env.local` and add the following line, updating 'ENTER YOUR API' with the actual API URL that you are working with:
-   \`\`\`js
-   VITE_API_URL = 'ENTER YOUR API'
-   \`\`\`
-7. Change git remote url to avoid accidental pushes to base project
-   \`\`\`sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
-   \`\`\`
-8. Save the file and restart your development server if it's running to make sure the new environment variables are loaded.
-   \`\`\`sh
-   npm run dev
-   \`\`\`
-9. You should now be able to access the application at `http://localhost:5173`
+1.  **Clone the repository:**
+    ```sh
+    git clone https://github.com/hoanghm690/ecommerce-admin.git
+    cd ecommerce-admin
+    ```
+2.  **Install dependencies:**
+    ```sh
+    npm install
+    ```
+3.  **Set up environment variables:**
+    - Copy the example environment file:
+      ```sh
+      cp .env.example .env.local
+      ```
+    - Open `.env.local` and update `VITE_API_URL` with your actual API endpoint. _(Note: The original step mentioned getting an API key from example.com - update this instruction if a specific API key source is needed)._
+4.  **Run the development server:**
+    ```sh
+    npm run dev
+    ```
+5.  **Access the application:** Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal).
+
+**(Optional)** If you intend to push changes to your own fork, change the remote URL:
+
+```sh
+git remote set-url origin <your-repository-url>
+git remote -v # Verify the change
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
