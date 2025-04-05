@@ -1,9 +1,9 @@
 import { PropsWithChildren } from 'react'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import { ErrorBoundary } from 'react-error-boundary'
-import ErrorFallback from './error-fallback'
+import { ErrorFallback } from './error-fallback'
 
-function QueryErrorResetBoundary({ children }: PropsWithChildren) {
+export function QueryErrorResetBoundary({ children }: PropsWithChildren) {
   const { reset } = useQueryErrorResetBoundary()
 
   return (
@@ -13,4 +13,4 @@ function QueryErrorResetBoundary({ children }: PropsWithChildren) {
   )
 }
 
-export default QueryErrorResetBoundary
+export * from './error-fallback'

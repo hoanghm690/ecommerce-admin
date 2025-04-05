@@ -12,7 +12,7 @@ type ControlledRadioGroupProps = Omit<ControlledInputProps, 'placeholder' | 'des
   options: RadioGroupOption[]
 }
 
-function ControlledRadioGroup({ name, label, disabled, options }: ControlledRadioGroupProps) {
+export function ControlledRadioGroup({ name, label, disabled, options }: ControlledRadioGroupProps) {
   const { control } = useFormContext()
 
   return (
@@ -40,5 +40,3 @@ function ControlledRadioGroup({ name, label, disabled, options }: ControlledRadi
     />
   )
 }
-
-export default ControlledRadioGroup

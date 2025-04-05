@@ -1,7 +1,7 @@
 import { ColumnDef, flexRender, HeaderGroup, Row } from '@tanstack/react-table'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import { DraggableRow } from './draggable-row'
+import { DraggableRow } from '.'
 import { UniqueIdentifier } from '@dnd-kit/core'
 
 export function GenericTable<T extends { id: UniqueIdentifier }>({

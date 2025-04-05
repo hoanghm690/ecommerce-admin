@@ -1,0 +1,535 @@
+# React 19 with Shadcn UI - Project Rules
+
+You are a React developer working on a modern React 19 application that uses Shadcn UI. This project follows specific patterns and conventions that you should adhere to when generating or modifying code.
+
+## Project Overview
+
+This is a React 19 application using Shadcn UI components and Tailwind CSS for styling. The project follows a modular architecture with a focus on component reusability and maintainability.
+
+### Key Technologies
+
+- React 19
+- TypeScript
+- Vite
+- Shadcn UI (built on Radix UI primitives)
+- Tailwind CSS
+- TanStack Query for data fetching
+- React Router v7 for routing
+- Zod for schema validation
+- React Hook Form for form handling
+- Tanstack Tables for data tables
+- nuqs for type-safe search params state management
+- ESLint for linting
+- Prettier for formatting
+- Husky for pre-commit hooks
+
+### Project Goals
+
+The main goals of this project are:
+
+1. Create a clean, maintainable codebase
+2. Follow modern React best practices
+3. Ensure type safety throughout the application
+4. Create responsive and accessible UI components
+5. Implement efficient state management
+6. Provide a great developer experience
+
+## Coding Standards
+
+1. **File Naming**:
+
+   - All files and folders in src/ should use kebab-case (e.g., `user-profile.tsx`, `auth-context.ts`)
+   - Component files should have the .tsx extension
+   - Utility/helper files should have the .ts extension
+   - Test files should have the .test.ts or .test.tsx extension
+
+2. **Component Structure**:
+
+   - Use functional components with hooks, not class components
+   - Export components as named exports, not default exports
+   - Keep components small and focused on a single responsibility
+   - Use TypeScript interfaces to define component props
+
+   ```tsx
+   // Example component structure
+   import { Button } from "@/components/ui/button";
+   import { cn } from "@/lib/utils";
+   import { useState } from "react";
+
+   interface UserCardProps {
+     name: string;
+     email: string;
+     role: string;
+     avatar?: string;
+     onEdit?: () => void;
+   }
+
+   export function UserCard({ 
+     name, 
+     email, 
+     role, 
+     avatar, 
+     onEdit 
+   }: UserCardProps) {
+     const [isExpanded, setIsExpanded] = useState(false);
+     
+     return (
+       <div className={cn(
+         "rounded-md border p-4",
+         isExpanded && "pb-6"
+       )}>
+         {/* Component content */}
+       </div>
+     );
+   }
+   ```
+
+3. **Styling**:
+
+   - Use Tailwind CSS for styling
+   - Use the `cn` utility from `src/lib/utils.ts` for conditional class names
+   - Use Shadcn UI component variants when applicable
+   - Follow the project's design system and spacing guidelines
+
+4. **State Management**:
+
+   - Use React's built-in hooks for local state
+   - Complex state should be managed in dedicated context providers in `/providers`
+   - Feature-specific logic should be in dedicated hooks in `/hooks`
+   - Keep state as close as possible to where it's used
+
+5. **API Integration**:
+
+   - Use TanStack Query for data fetching and mutations
+   - API service functions should be organized in feature-specific modules
+   - Implement API services as classes that use the HttpClient
+   - Use TypeScript for type-safe API responses
+
+6. **Error Handling**:
+
+   - Use error boundaries for component-level error handling
+   - Use try/catch for API calls and other async operations
+   - Provide user-friendly error messages
+
+7. **Accessibility**:
+
+   - Ensure all components are keyboard navigable
+   - Use semantic HTML elements
+   - Add appropriate aria attributes
+   - Test with screen readers
+   - Follow WCAG guidelines
+
+## Directory Structure
+
+```
+src/
+├── assets/             # Static assets like images, fonts, etc.
+├── components/         # Reusable UI components
+│   ├── ui/             # Shadcn UI components and other basic UI elements
+│   └── [feature-name]/ # Feature-specific components
+├── constants/          # Application constants and enums
+├── features/           # Feature-specific modules
+│   └── [feature-name]/ # Components, hooks, utils for specific features
+├── hooks/              # Custom React hooks
+├── layouts/            # Layout components for pages
+├── lib/                # Third-party library configurations
+│   ├── apis/           # API service classes
+│   └── config/         # Configuration for libraries
+├── pages/              # Page components
+├── providers/          # Context providers
+└── utils/              # Utility functions
+```
+
+## Component File Organization
+
+Each component file should follow this structure:
+
+1. Imports
+2. Type definitions (interfaces/types)
+3. Helper functions (if specific to this component)
+4. Component definition
+5. Exports
+
+Example:
+
+```tsx
+// src/components/user/user-card.tsx
+import { useState } from "react";
+import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { formatDate } from "@/utils/format-date";
+
+// Type definitions
+interface UserCardProps {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  lastActive?: Date;
+  avatar?: string;
+  onEdit?: (id: string) => void;
+}
+
+// Component definition
+export function UserCard({
+  id,
+  name,
+  email,
+  role,
+  lastActive,
+  avatar,
+  onEdit,
+}: UserCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  // Component logic and rendering
+  return (
+    <Card className="p-4">
+      {/* Component content */}
+    </Card>
+  );
+}
+```
+
+## Shadcn UI Implementation
+
+- Import Shadcn UI components directly from `@/components/ui`
+- Use the `cn` utility for combining class names with Tailwind
+- Follow the component API as documented in the Shadcn UI documentation
+
+### Example Usage
+
+```tsx
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+
+export function LoginForm() {
+  return (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <label htmlFor="email" className="text-sm font-medium">Email</label>
+        <Input id="email" type="email" placeholder="Enter your email" />
+      </div>
+      <div className="space-y-2">
+        <label htmlFor="password" className="text-sm font-medium">Password</label>
+        <Input id="password" type="password" placeholder="Enter your password" />
+      </div>
+      <Button className="w-full">Sign In</Button>
+    </div>
+  );
+}
+```
+
+### Form Components
+
+- Use React Hook Form with Zod for form validation
+- Use Shadcn UI form components for consistent styling
+- Group related form fields logically
+
+```tsx
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+const formSchema = z.object({
+  username: z.string().min(2).max(50),
+  email: z.string().email(),
+});
+
+export function ProfileForm() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Handle form submission
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter username" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Save Changes</Button>
+      </form>
+    </Form>
+  );
+}
+```
+
+## State Management Guidelines
+
+### Component State
+
+For local component state:
+
+- Use `useState` for simple state management within components
+- Use `useReducer` for more complex state logic within a single component
+- Keep state as close as possible to where it's used
+
+```tsx
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+
+export function Counter() {
+  const [count, setCount] = useState(0);
+  
+  return (
+    <div className="flex items-center gap-4">
+      <Button onClick={() => setCount(count - 1)}>-</Button>
+      <span>{count}</span>
+      <Button onClick={() => setCount(count + 1)}>+</Button>
+    </div>
+  );
+}
+```
+
+### Context-based State Management
+
+For shared state across components:
+
+- Create dedicated context providers in the `/providers` directory
+- Use the context with custom hooks for better reusability
+- Split contexts by domain to avoid unnecessary re-renders
+
+Example context provider:
+
+```tsx
+// src/providers/theme-provider.tsx
+import { createContext, useContext, useState, ReactNode } from "react";
+
+type Theme = "light" | "dark" | "system";
+
+interface ThemeContextValue {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+}
+
+const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
+
+interface ThemeProviderProps {
+  children: ReactNode;
+  defaultTheme?: Theme;
+}
+
+export function ThemeProvider({
+  children,
+  defaultTheme = "system"
+}: ThemeProviderProps) {
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
+  
+  const value = {
+    theme,
+    setTheme,
+  };
+  
+  return (
+    <ThemeContext.Provider value={value}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  
+  if (context === undefined) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  
+  return context;
+}
+```
+
+## API Integration Guidelines
+
+### API Service Structure
+
+API services are organized in the `src/lib/apis` directory, grouped by domain:
+
+```
+src/lib/apis/
+├── users/                 # User-related API
+│   ├── index.ts           # Re-exports and instance creation
+│   ├── service.ts         # API service class implementation
+│   └── types.ts           # Type definitions for users
+├── products/              # Product-related API (example)
+│   ├── index.ts
+│   ├── service.ts
+│   └── types.ts
+└── ...
+```
+
+### API Service Implementation
+
+API services are implemented as classes that use the HttpClient:
+
+```tsx
+// src/lib/apis/users/service.ts
+import { HttpClient } from '@/lib/config/axios'
+import { ApiEndpoint } from '@/constants'
+import { User } from './types'
+
+export class UsersApi {
+  private client: HttpClient
+
+  constructor() {
+    this.client = new HttpClient('/')
+  }
+
+  async getMe(): Promise<User> {
+    return await this.client.get<User>(ApiEndpoint.GET_ME)
+  }
+  
+  async getUsers(): Promise<User[]> {
+    return await this.client.get<User[]>(ApiEndpoint.GET_USERS)
+  }
+  
+  async getUser(id: number): Promise<User> {
+    return await this.client.get<User>(`${ApiEndpoint.GET_USER}/${id}`)
+  }
+  
+  async createUser(data: Omit<User, 'id'>): Promise<User> {
+    return await this.client.post<User>(ApiEndpoint.CREATE_USER, data)
+  }
+  
+  async updateUser(id: number, data: Partial<User>): Promise<User> {
+    return await this.client.put<User>(`${ApiEndpoint.UPDATE_USER}/${id}`, data)
+  }
+  
+  async deleteUser(id: number): Promise<void> {
+    await this.client.delete(`${ApiEndpoint.DELETE_USER}/${id}`)
+  }
+}
+```
+
+### Using TanStack Query
+
+Use TanStack Query hooks for data fetching and mutations:
+
+```tsx
+// src/hooks/users/use-users.ts
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { usersApi } from '@/lib/apis/users'
+
+export function useUsers() {
+  return useQuery({
+    queryKey: ['users'],
+    queryFn: () => usersApi.getUsers()
+  })
+}
+
+export function useUser(id: number) {
+  return useQuery({
+    queryKey: ['users', id],
+    queryFn: () => usersApi.getUser(id),
+    enabled: !!id
+  })
+}
+
+export function useCreateUser() {
+  const queryClient = useQueryClient()
+  
+  return useMutation({
+    mutationFn: (data: Omit<User, 'id'>) => usersApi.createUser(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] })
+    }
+  })
+}
+```
+
+## Performance Considerations
+
+- Memoize expensive calculations with useMemo
+- Use useCallback for functions passed as props
+- Implement code splitting where applicable
+- Use proper dependency arrays in useEffect, useMemo, and useCallback
+- Keep re-renders to a minimum
+- Use React.memo for components that render often but rarely change
+
+```tsx
+import { useMemo, useCallback } from "react";
+
+export function ExpensiveComponent({ data, onItemClick }) {
+  // Memoize expensive calculations
+  const processedData = useMemo(() => {
+    return data.map(item => ({
+      ...item,
+      processed: expensiveOperation(item)
+    }));
+  }, [data]);
+  
+  // Memoize callback functions
+  const handleItemClick = useCallback((id) => {
+    onItemClick(id);
+  }, [onItemClick]);
+  
+  return (
+    <div>
+      {processedData.map(item => (
+        <div key={item.id} onClick={() => handleItemClick(item.id)}>
+          {item.processed}
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Code Quality
+
+- Write self-documenting code with clear function and variable names
+- Add comments for complex logic
+- Follow DRY (Don't Repeat Yourself) principles
+- Keep components and functions small and focused
+- Use TypeScript to ensure type safety throughout the application
+- Write unit tests for critical functionality
+- Use ESLint and Prettier to maintain code style consistency
+
+## Development Guidelines
+
+- Follow kebab-case for all file and folder names in src directory
+- Write clean, self-documenting code
+- Prioritize component composition over inheritance
+- Maintain high test coverage
+- Optimize for performance
+- Use Git feature branches for new features or bug fixes
+- Write meaningful commit messages
+- Review code before merging to main branches
+
+Remember to follow these guidelines when generating or modifying code for this project.

@@ -1,11 +1,17 @@
 import { useFormContext } from 'react-hook-form'
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Textarea } from '../ui/textarea'
+import { Textarea } from '@/components/ui'
 import { ControlledInputProps } from './controlled-input'
 
 type ControlledTextareaProps = ControlledInputProps
 
-function ControlledTextarea({ name, label, placeholder, description, disabled = false }: ControlledTextareaProps) {
+export function ControlledTextarea({
+  name,
+  label,
+  placeholder,
+  description,
+  disabled = false
+}: ControlledTextareaProps) {
   const { control } = useFormContext()
 
   return (
@@ -25,5 +31,3 @@ function ControlledTextarea({ name, label, placeholder, description, disabled = 
     />
   )
 }
-
-export default ControlledTextarea

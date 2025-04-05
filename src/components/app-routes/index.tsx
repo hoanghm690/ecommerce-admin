@@ -1,19 +1,27 @@
 import { Route, Routes } from 'react-router'
-import { lazy } from 'react'
-import ScrollTop from '@/components/scroll-top'
-import AuthCheckingGuard from '@/components/guard/auth-checking-guard'
-import PrivateGuard from '@/components/guard/private-guard'
-import PublicGuard from '@/components/guard/public-guard'
+import { lazy, ComponentType } from 'react'
+import { ScrollTop } from '@/components/scroll-top'
+import { AuthCheckingGuard, PrivateGuard, PublicGuard } from '@/components/guard'
 import { RoutePaths } from '@/constants'
 
-const AdminLayout = lazy(() => import('@/layouts/admin-layout'))
-const AuthLayout = lazy(() => import('@/layouts/auth-layout'))
+// Utility function to create a lazy component from a named export
+const lazyImport = <T extends ComponentType<any>>(moduleImport: Promise<{ [key: string]: T }>, name: string) =>
+  lazy(() =>
+    moduleImport.then((module) => ({
+      default: module[name]
+    }))
+  )
 
-const Dashboard = lazy(() => import('@/pages/dashboard'))
-const Login = lazy(() => import('@/pages/login'))
-const NotFound = lazy(() => import('@/pages/not-found'))
+// Import layouts
+const AdminLayout = lazyImport(import('@/layouts'), 'AdminLayout')
+const AuthLayout = lazyImport(import('@/layouts'), 'AuthLayout')
 
-function AppRoutes() {
+// Import pages
+const Dashboard = lazyImport(import('@/pages'), 'Dashboard')
+const Login = lazyImport(import('@/pages'), 'Login')
+const NotFound = lazyImport(import('@/pages'), 'NotFound')
+
+export function AppRoutes() {
   return (
     <>
       <ScrollTop />
@@ -34,5 +42,3 @@ function AppRoutes() {
     </>
   )
 }
-
-export default AppRoutes

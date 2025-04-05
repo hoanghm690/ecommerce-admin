@@ -39,8 +39,7 @@ import {
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { GenericTable } from './generic-table'
-import { PaginationControls } from './pagination-controls'
+import { GenericTable, PaginationControls } from '.'
 
 interface DataTableProps<T> {
   columns: ColumnDef<T>[]

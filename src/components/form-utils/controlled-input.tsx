@@ -1,8 +1,7 @@
 import { useFormContext } from 'react-hook-form'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input } from '@/components/ui'
 
-export type ControlledInputProps = {
+export interface ControlledInputProps {
   name: string
   label: string
   placeholder?: string
@@ -10,7 +9,7 @@ export type ControlledInputProps = {
   disabled?: boolean
 }
 
-function ControlledInput({ name, label, placeholder, description, disabled = false }: ControlledInputProps) {
+export function ControlledInput({ name, label, placeholder, description, disabled = false }: ControlledInputProps) {
   const { control } = useFormContext()
 
   return (
@@ -30,5 +29,3 @@ function ControlledInput({ name, label, placeholder, description, disabled = fal
     />
   )
 }
-
-export default ControlledInput

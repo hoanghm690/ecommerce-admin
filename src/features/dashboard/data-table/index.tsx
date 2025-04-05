@@ -1,14 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
-import { DataTable } from '@/components/table/data-table'
-import { TableCellViewer } from '../table-cell-viewer'
-import { DragHandle } from './drag-handle'
-import { ActionsCell } from './actions-cell'
-import { ReviewerCell } from './reviewer-cell'
-import { LimitCell } from './limit-cell'
-import { TargetCell } from './target-cell'
-import { StatusCell } from './status-cell'
+import { DataTable } from '@/components/table'
+import { TableCellViewer } from '@/features/dashboard/table-cell-viewer'
+import { DragHandle, ActionsCell, ReviewerCell, LimitCell, TargetCell, StatusCell } from './components'
 
 export type DashboardType = {
   id: number

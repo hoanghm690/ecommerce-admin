@@ -13,7 +13,7 @@ const getCookieValue = (name: string, defaultValue = true) => {
   return match ? match[2] === 'true' : defaultValue
 }
 
-export default function AdminLayout() {
+export function AdminLayout() {
   const [defaultOpen] = useState(() => getCookieValue(SIDEBAR_COOKIE_NAME))
 
   return (

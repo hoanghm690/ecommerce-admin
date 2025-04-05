@@ -12,7 +12,13 @@ type ControlledCheckboxMultipleProps = Omit<ControlledInputProps, 'placeholder'>
   options: CheckboxOption[]
 }
 
-function ControlledCheckboxMultiple({ name, label, description, disabled, options }: ControlledCheckboxMultipleProps) {
+export function ControlledCheckboxMultiple({
+  name,
+  label,
+  description,
+  disabled,
+  options
+}: ControlledCheckboxMultipleProps) {
   const { control } = useFormContext()
 
   return (
@@ -56,5 +62,3 @@ function ControlledCheckboxMultiple({ name, label, description, disabled, option
     />
   )
 }
-
-export default ControlledCheckboxMultiple

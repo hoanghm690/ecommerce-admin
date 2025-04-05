@@ -20,7 +20,7 @@ type ControlledSelectGroupProps = Omit<ControlledSelectProps, 'options'> & {
   options: SelectGroupOption[]
 }
 
-function ControlledSelectGroup({
+export function ControlledSelectGroup({
   name,
   label,
   placeholder,
@@ -63,5 +63,3 @@ function ControlledSelectGroup({
     />
   )
 }
-
-export default ControlledSelectGroup

@@ -1,0 +1,387 @@
+---
+description: 
+globs: 
+---
+```markdown
+# API Integration Guidelines
+
+This project uses TanStack Query (React Query) and a custom HttpClient wrapper around Axios for API integration. These guidelines ensure consistent, type-safe, and maintainable API interactions throughout the application.
+
+## API Service Structure
+
+API services are organized in the `src/lib/apis` directory, grouped by domain:
+
+```
+src/lib/apis/
+├── users/                 # User-related API
+│   ├── index.ts           # Re-exports and instance creation
+│   ├── service.ts         # API service class implementation
+│   └── types.ts           # Type definitions for users
+├── products/              # Product-related API (example)
+│   ├── index.ts
+│   ├── service.ts
+│   └── types.ts
+└── ...
+```
+
+## API Service Implementation
+
+API services are implemented as classes that use the HttpClient:
+
+```tsx
+// src/lib/apis/users/service.ts
+import { HttpClient } from '@/lib/config/axios'
+import { ApiEndpoint } from '@/constants'
+import { User } from './types'
+
+export class UsersApi {
+  private client: HttpClient
+
+  constructor() {
+    this.client = new HttpClient('/')
+  }
+
+  async getMe(): Promise<User> {
+    return await this.client.get<User>(ApiEndpoint.GET_ME)
+  }
+  
+  async getUsers(): Promise<User[]> {
+    return await this.client.get<User[]>(ApiEndpoint.GET_USERS)
+  }
+  
+  async getUser(id: number): Promise<User> {
+    return await this.client.get<User>(`${ApiEndpoint.GET_USER}/${id}`)
+  }
+  
+  async createUser(data: Omit<User, 'id'>): Promise<User> {
+    return await this.client.post<User>(ApiEndpoint.CREATE_USER, data)
+  }
+  
+  async updateUser(id: number, data: Partial<User>): Promise<User> {
+    return await this.client.put<User>(`${ApiEndpoint.UPDATE_USER}/${id}`, data)
+  }
+  
+  async deleteUser(id: number): Promise<void> {
+    await this.client.delete(`${ApiEndpoint.DELETE_USER}/${id}`)
+  }
+}
+```
+
+## Type Definitions
+
+Define clear types for API entities and requests:
+
+```tsx
+// src/lib/apis/users/types.ts
+export type User = {
+  id: number
+  email: string
+  first_name: string
+  last_name: string
+}
+
+export type CreateUserDto = Omit<User, 'id'>
+export type UpdateUserDto = Partial<CreateUserDto>
+```
+
+## API Exports and Instance Creation
+
+Export types and create a singleton instance of the API service:
+
+```tsx
+// src/lib/apis/users/index.ts
+import { UsersApi } from './service'
+
+export * from './types'
+export * from './service'
+
+export const usersApi = new UsersApi()
+```
+
+## API Constants
+
+Define API endpoints in a constants file:
+
+```tsx
+// src/constants/api-endpoint-constants.ts
+export const ApiEndpoint = {
+  GET_ME: 'me',
+  GET_USERS: 'users',
+  GET_USER: 'users',
+  CREATE_USER: 'users',
+  UPDATE_USER: 'users',
+  DELETE_USER: 'users'
+}
+```
+
+## TanStack Query Integration
+
+Use TanStack Query for data fetching with custom hooks:
+
+```tsx
+// src/hooks/users/use-user.ts
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { usersApi, User, CreateUserDto, UpdateUserDto } from '@/lib/apis/users'
+import { toast } from 'sonner'
+
+// Query keys for consistent cache management
+const USERS_QUERY_KEY = 'users'
+const USER_QUERY_KEY = 'user'
+
+export function useGetUsers() {
+  return useQuery({
+    queryKey: [USERS_QUERY_KEY],
+    queryFn: () => usersApi.getUsers()
+  })
+}
+
+export function useGetUser(id: number) {
+  return useQuery({
+    queryKey: [USER_QUERY_KEY, id],
+    queryFn: () => usersApi.getUser(id),
+    enabled: !!id
+  })
+}
+
+export function useCreateUser() {
+  const queryClient = useQueryClient()
+  
+  return useMutation({
+    mutationFn: (data: CreateUserDto) => usersApi.createUser(data),
+    onSuccess: () => {
+      toast.success('User created successfully')
+      queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY] })
+    },
+    onError: (error) => {
+      toast.error(`Failed to create user: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    }
+  })
+}
+
+export function useUpdateUser(id: number) {
+  const queryClient = useQueryClient()
+  
+  return useMutation({
+    mutationFn: (data: UpdateUserDto) => usersApi.updateUser(id, data),
+    onSuccess: () => {
+      toast.success('User updated successfully')
+      queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY] })
+      queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY, id] })
+    },
+    onError: (error) => {
+      toast.error(`Failed to update user: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    }
+  })
+}
+
+export function useDeleteUser() {
+  const queryClient = useQueryClient()
+  
+  return useMutation({
+    mutationFn: (id: number) => usersApi.deleteUser(id),
+    onSuccess: () => {
+      toast.success('User deleted successfully')
+      queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY] })
+    },
+    onError: (error) => {
+      toast.error(`Failed to delete user: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    }
+  })
+}
+```
+
+## HttpClient Implementation
+
+The project uses a custom HttpClient wrapper around Axios:
+
+```tsx
+// src/lib/config/axios.ts
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
+import { EnvConfig, RoutePaths, StorageKey } from '@/constants'
+
+export type Params = Record<string, unknown>
+export type HttpRequestMethod = 'get' | 'post' | 'put' | 'patch' | 'delete'
+
+export class HttpClient {
+  public axiosInstance: AxiosInstance
+  private handler: AxiosResponseHandler
+
+  constructor(baseRoute: string) {
+    this.axiosInstance = axios.create({
+      baseURL: `${EnvConfig.API_URL}${baseRoute}`,
+      withCredentials: false,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    this.setupInterceptors()
+    this.handler = new AxiosResponseHandler()
+  }
+
+  // Setup methods for auth token management and error handling
+  // ...
+
+  public async get<T>(uri: string): Promise<T> {
+    return this.request<T>('get', uri)
+  }
+
+  public async post<T>(uri: string, data?: Params | FormData): Promise<T> {
+    return this.request<T>('post', uri, data)
+  }
+
+  public async put<T>(uri: string, data?: Params): Promise<T> {
+    return this.request<T>('put', uri, data)
+  }
+
+  public async patch<T>(uri: string, data?: Params): Promise<T> {
+    return this.request<T>('patch', uri, data)
+  }
+
+  public async delete<T>(uri: string): Promise<T> {
+    return this.request<T>('delete', uri)
+  }
+}
+```
+
+## Query Client Configuration
+
+TanStack Query is configured in a dedicated provider:
+
+```tsx
+// src/providers/react-query-provider.tsx
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ReactNode } from 'react'
+import { queryClient } from '@/lib/config/query-client'
+
+interface QueryProviderProps {
+  children: ReactNode
+}
+
+export function ReactQueryProvider({ children }: QueryProviderProps) {
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      {import.meta.env.DEV && <ReactQueryDevtools />}
+    </QueryClientProvider>
+  )
+}
+```
+
+The query client itself is defined in a configuration file:
+
+```tsx
+// src/lib/config/query-client.ts
+import { RoutePaths, StorageKey } from '@/constants'
+import { keepPreviousData, QueryClient } from '@tanstack/react-query'
+
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      throwOnError: true,
+      placeholderData: keepPreviousData,
+      retry: (failureCount, error: any) => {
+        // Don't retry on 401 unauthorized
+        if (error?.response?.status === 401) {
+          // Auth handling logic
+          return false
+        }
+        return failureCount < 1
+      }
+    },
+    mutations: {
+      // Mutation options
+    }
+  }
+})
+```
+
+## Usage in Components
+
+Use the custom hooks in components:
+
+```tsx
+// src/components/users/user-list.tsx
+import { useGetUsers, useDeleteUser } from '@/hooks/users/use-user'
+import { Button } from '@/components/ui/button'
+import { UserCard } from './user-card'
+
+export function UserList() {
+  const { data: users, isLoading, error } = useGetUsers()
+  const deleteUser = useDeleteUser()
+  
+  const handleDelete = (id: number) => {
+    if (confirm('Are you sure you want to delete this user?')) {
+      deleteUser.mutate(id)
+    }
+  }
+  
+  if (isLoading) {
+    return <div>Loading users...</div>
+  }
+  
+  if (error) {
+    return <div>Error loading users</div>
+  }
+  
+  return (
+    <div className="space-y-4">
+      {users?.map(user => (
+        <UserCard 
+          key={user.id} 
+          user={user} 
+          onDelete={() => handleDelete(user.id)}
+        />
+      ))}
+    </div>
+  )
+}
+```
+
+## Authentication Integration
+
+The project uses an auth provider pattern for authentication:
+
+```tsx
+// src/hooks/auth/use-login.ts
+import { LoginFormType } from '@/pages/login'
+import { useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router'
+import { RoutePaths } from '@/constants'
+import { useAuthContext } from '@/providers/auth'
+import { toast } from 'sonner'
+
+export function useLogin() {
+  const {
+    authProvider: { login, getIdentity },
+    setAuthState
+  } = useAuthContext()
+  const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleLogin = async (values: LoginFormType) => {
+    try {
+      setIsLoading(true)
+      await login(values)
+      const identity = await getIdentity()
+
+      if (identity) {
+        setAuthState(true, identity)
+        const redirectPath = params.get('continue') || RoutePaths.DASHBOARD
+        navigate(redirectPath, { replace: true })
+      }
+    } catch (_error) {
+      toast.error('Login failed')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  return { handleLogin, isLoading }
+}
+```
+```

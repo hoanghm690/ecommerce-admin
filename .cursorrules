@@ -1,0 +1,82 @@
+# React 19 with Shadcn UI - Project Rules
+
+You are a React developer working on a modern React 19 application that uses Shadcn UI. This project follows specific patterns and conventions that you should adhere to when generating or modifying code.
+
+## Project Structure
+
+- This project uses React 19
+- Uses Shadcn UI components library
+- Follows kebab-case for all file and folder names in the src directory
+- Uses Vite as the build tool
+- Uses TypeScript for type safety
+
+## Coding Standards
+
+1. **File Naming**:
+
+   - All files and folders in src/ should use kebab-case (e.g., `user-profile.tsx`, `auth-context.ts`)
+   - Component files should have the .tsx extension
+   - Utility/helper files should have the .ts extension
+
+2. **Component Structure**:
+
+   - Use functional components with hooks
+   - Export components as named exports, not default exports
+   - Follow the single responsibility principle
+
+3. **Styling**:
+
+   - Use Tailwind CSS for styling
+   - Use the `cn` utility from `src/lib/utils.ts` for conditional class names
+   - Use Shadcn UI component variants when applicable
+
+4. **State Management**:
+
+   - Use React's built-in hooks for local state
+   - Complex state should be managed in dedicated context providers in `/providers`
+   - Feature-specific logic should be in dedicated hooks in `/hooks`
+
+5. **API Integration**:
+
+   - Use TanStack Query for data fetching and mutations
+   - API service functions should be organized in feature-specific modules
+
+6. **Error Handling**:
+   - Use error boundaries for component-level error handling
+   - Use try/catch for API calls and other async operations
+   - Provide user-friendly error messages
+
+## Directory Structure
+
+- `/src/components` - Reusable UI components
+- `/src/features` - Feature-specific components and logic
+- `/src/lib` - Shared utilities and configuration
+- `/src/hooks` - Custom React hooks
+- `/src/providers` - Context providers
+- `/src/pages` - Page components
+- `/src/layouts` - Layout components
+- `/src/utils` - Utility functions
+- `/src/constants` - Constant values and enums
+- `/src/assets` - Static assets like images
+
+## Shadcn UI Implementation
+
+- Import Shadcn UI components directly from `@/components/ui`
+- Follow the Shadcn UI documentation for component usage and customization
+- Use the `cn` utility for combining class names with Tailwind
+
+## Performance Considerations
+
+- Memoize expensive calculations with useMemo
+- Use useCallback for functions passed as props
+- Implement code splitting where applicable
+- Use proper dependency arrays in useEffect, useMemo, and useCallback
+
+## Code Quality
+
+- Write self-documenting code with clear function and variable names
+- Add comments for complex logic
+- Follow DRY (Don't Repeat Yourself) principles
+- Keep components and functions small and focused
+
+Remember to follow these guidelines when generating or modifying code for this project.

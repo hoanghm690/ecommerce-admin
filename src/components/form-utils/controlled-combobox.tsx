@@ -1,11 +1,11 @@
 import { useFormContext } from 'react-hook-form'
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { ControlledInputProps } from './controlled-input'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { Button } from '../ui/button'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui'
+import { Button } from '@/components/ui'
 import { cn } from '@/lib/utils'
 import { Check, ChevronsUpDown } from 'lucide-react'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../ui/command'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui'
 import { SelectOption } from './controlled-select'
 
 type ControlledComboboxProps = ControlledInputProps & {
@@ -14,7 +14,7 @@ type ControlledComboboxProps = ControlledInputProps & {
   commandEmptyText: string
 }
 
-function ControlledCombobox({
+export function ControlledCombobox({
   name,
   label,
   placeholder,
@@ -79,5 +79,3 @@ function ControlledCombobox({
     />
   )
 }
-
-export default ControlledCombobox

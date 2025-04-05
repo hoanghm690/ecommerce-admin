@@ -3,7 +3,7 @@ import { SectionCards } from '@/features/dashboard/section-cards'
 import data from '@/app/dashboard/data.json'
 import { DashboardDataTable } from '@/features/dashboard/data-table'
 
-export default function Dashboard() {
+export function Dashboard() {
   return (
     <>
       <SectionCards />

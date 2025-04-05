@@ -13,7 +13,7 @@ import {
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { useLogout } from '@/hooks/auth/use-logout'
 import { useAuthContext } from '@/providers/auth'
-import { getFullName, getShortName } from '@/utils/string'
+import { getFullName, getShortName } from '@/utils'
 import { useSidebar } from '@/providers/sidebar-provider'
 
 export function NavUser() {

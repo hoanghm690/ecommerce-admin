@@ -1,11 +1,11 @@
 import { useFormContext } from 'react-hook-form'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form'
-import { Switch } from '../ui/switch'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Switch } from '@/components/ui'
 import { ControlledInputProps } from './controlled-input'
 
 type ControlledSwitchProps = Omit<ControlledInputProps, 'placeholder'>
 
-function ControlledSwitch({ name, label, description, disabled }: ControlledSwitchProps) {
+export function ControlledSwitch({ name, label, description, disabled }: ControlledSwitchProps) {
   const { control } = useFormContext()
 
   return (
@@ -19,17 +19,11 @@ function ControlledSwitch({ name, label, description, disabled }: ControlledSwit
             {description && <FormDescription>{description}</FormDescription>}
           </div>
           <FormControl>
-            <Switch
-              checked={field.value}
-              onCheckedChange={field.onChange}
-              disabled={disabled}
-              aria-readonly={disabled}
-            />
+            <Switch disabled={disabled} checked={field.value} onCheckedChange={field.onChange} />
           </FormControl>
+          <FormMessage />
         </FormItem>
       )}
     />
   )
 }
-
-export default ControlledSwitch

@@ -2,8 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ReactNode } from 'react'
 import { DefaultValues, FieldValues, SubmitHandler, useForm, UseFormReturn } from 'react-hook-form'
 import { ZodType, ZodTypeDef } from 'zod'
-import { Form } from '@/components/ui/form'
-import { LoadingButton, LoadingButtonProps } from '@/components/common/loading-button'
+import { Form } from '@/components/ui'
+import { LoadingButton, LoadingButtonProps } from '@/components/common'
 
 interface AppFormProps<T extends FieldValues> {
   schema: ZodType<T, ZodTypeDef, T>
@@ -13,7 +13,7 @@ interface AppFormProps<T extends FieldValues> {
   submitButtonProps?: LoadingButtonProps
 }
 
-function AppForm<T extends FieldValues>({
+export function AppForm<T extends FieldValues>({
   schema,
   defaultValues,
   onSubmit,
@@ -35,5 +35,3 @@ function AppForm<T extends FieldValues>({
     </Form>
   )
 }
-
-export default AppForm

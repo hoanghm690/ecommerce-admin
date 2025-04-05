@@ -1,0 +1,40 @@
+---
+description: 
+globs: 
+---
+ ```markdown
+# Project Overview
+
+This is a React 19 application using Shadcn UI components and Tailwind CSS for styling. The project follows a modular architecture with a focus on component reusability and maintainability.
+
+## Key Technologies
+
+- React 19
+- TypeScript
+- Vite
+- Shadcn UI (built on Radix UI primitives)
+- Tailwind CSS
+- TanStack Query for data fetching
+- React Router v7 for routing
+- Zod for schema validation
+- React Hook Form for form handling
+
+## Project Goals
+
+The main goals of this project are:
+
+1. Create a clean, maintainable codebase
+2. Follow modern React best practices
+3. Ensure type safety throughout the application
+4. Create responsive and accessible UI components
+5. Implement efficient state management
+6. Provide a great developer experience
+
+## Development Guidelines
+
+- Follow kebab-case for all file and folder names in src directory
+- Write clean, self-documenting code
+- Prioritize component composition over inheritance
+- Maintain high test coverage
+- Optimize for performance
+```

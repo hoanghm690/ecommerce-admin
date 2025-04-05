@@ -1,7 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui'
 import { z } from 'zod'
-import AppForm from '@/components/form-utils/app-form'
-import ControlledInput from '@/components/form-utils/controlled-input'
+import { AppForm, ControlledInput } from '@/components/form-utils'
 import { useLogin } from '@/hooks/auth/use-login'
 import { AppMessages } from '@/constants'
 
@@ -14,7 +13,7 @@ const loginFormSchema = z.object({
 
 export type LoginFormType = z.infer<typeof loginFormSchema>
 
-export default function Login() {
+export function Login() {
   const { handleLogin, isLoading } = useLogin()
 
   return (

@@ -1,0 +1,307 @@
+---
+description: 
+globs: 
+---
+ ```markdown
+# State Management Guidelines
+
+This project uses a combination of React's built-in state management capabilities and custom utilities for managing application state.
+
+## Component State
+
+For local component state:
+
+- Use `useState` for simple state management within components
+- Use `useReducer` for more complex state logic within a single component
+- Keep state as close as possible to where it's used
+
+```tsx
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+
+export function Counter() {
+  const [count, setCount] = useState(0);
+  
+  return (
+    <div className="flex items-center gap-4">
+      <Button onClick={() => setCount(count - 1)}>-</Button>
+      <span>{count}</span>
+      <Button onClick={() => setCount(count + 1)}>+</Button>
+    </div>
+  );
+}
+```
+
+## Context-based State Management
+
+For shared state across components:
+
+- Create dedicated context providers in the `/providers` directory
+- Use the context with custom hooks for better reusability
+- Split contexts by domain to avoid unnecessary re-renders
+
+Example context provider:
+
+```tsx
+// src/providers/theme-provider.tsx
+import { createContext, useContext, useState, ReactNode } from "react";
+
+type Theme = "light" | "dark" | "system";
+
+interface ThemeContextValue {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+}
+
+const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
+
+interface ThemeProviderProps {
+  children: ReactNode;
+  defaultTheme?: Theme;
+}
+
+export function ThemeProvider({
+  children,
+  defaultTheme = "system"
+}: ThemeProviderProps) {
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
+  
+  const value = {
+    theme,
+    setTheme,
+  };
+  
+  return (
+    <ThemeContext.Provider value={value}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  
+  if (context === undefined) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  
+  return context;
+}
+```
+
+Usage in components:
+
+```tsx
+// src/components/theme-toggle.tsx
+import { Button } from "@/components/ui/button";
+import { useTheme } from "@/providers/theme-provider";
+import { SunIcon, MoonIcon } from "lucide-react";
+
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+    >
+      {theme === "light" ? <MoonIcon /> : <SunIcon />}
+    </Button>
+  );
+}
+```
+
+## React Query for Server State
+
+Use TanStack Query (React Query) for managing server state:
+
+- Create custom hooks for data fetching operations
+- Use React Query's caching capabilities for performance
+- Separate API calls from UI components
+
+```tsx
+// src/features/users/api/users-service.ts
+import axios from "axios";
+import { User } from "../types/user-types";
+
+const API_URL = "/api/users";
+
+export async function getUsers(): Promise<User[]> {
+  const response = await axios.get(API_URL);
+  return response.data;
+}
+
+export async function getUser(id: string): Promise<User> {
+  const response = await axios.get(`${API_URL}/${id}`);
+  return response.data;
+}
+
+// src/features/users/hooks/use-users.ts
+import { useQuery } from "@tanstack/react-query";
+import { getUsers, getUser } from "../api/users-service";
+
+export function useUsers() {
+  return useQuery({
+    queryKey: ["users"],
+    queryFn: getUsers
+  });
+}
+
+export function useUser(id: string) {
+  return useQuery({
+    queryKey: ["users", id],
+    queryFn: () => getUser(id),
+    enabled: !!id
+  });
+}
+```
+
+## Form State Management
+
+Use React Hook Form for managing form state:
+
+- Define schemas with Zod for validation
+- Use React Hook Form's controlled components pattern
+- Use form context for complex forms
+
+```tsx
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+type FormValues = z.infer<typeof formSchema>;
+
+export function LoginForm() {
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+  
+  function onSubmit(values: FormValues) {
+    // Handle form submission
+    console.log(values);
+  }
+  
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="Password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" className="w-full">Sign In</Button>
+      </form>
+    </Form>
+  );
+}
+```
+
+## URL State Management
+
+Use URL parameters for sharable state:
+
+- Use query parameters for filter/sort states
+- Use route parameters for identifying resources
+- Consider using the `nuqs` library for typed query params
+
+```tsx
+// src/pages/products/products-page.tsx
+import { useSearchParams } from "react-router-dom";
+import { ProductList } from "@/features/products/components/product-list";
+import { ProductFilters } from "@/features/products/components/product-filters";
+
+export function ProductsPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const category = searchParams.get("category") || "all";
+  const sort = searchParams.get("sort") || "newest";
+  
+  const handleCategoryChange = (newCategory: string) => {
+    setSearchParams(prev => {
+      prev.set("category", newCategory);
+      return prev;
+    });
+  };
+  
+  const handleSortChange = (newSort: string) => {
+    setSearchParams(prev => {
+      prev.set("sort", newSort);
+      return prev;
+    });
+  };
+  
+  return (
+    <div className="container py-6">
+      <ProductFilters 
+        category={category} 
+        sort={sort}
+        onCategoryChange={handleCategoryChange}
+        onSortChange={handleSortChange}
+      />
+      <ProductList category={category} sort={sort} />
+    </div>
+  );
+}
+```
+
+## Performance Optimization
+
+- Use `React.memo` for components that render often but with the same props
+- Use `useMemo` for expensive calculations
+- Use `useCallback` for functions passed as props
+- Avoid unnecessary re-renders by keeping state granular
+- Use context selectors to avoid unnecessary re-renders
+
+```tsx
+// Example of using React.memo
+import { memo } from "react";
+
+interface UserItemProps {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export const UserItem = memo(function UserItem({ id, name, email }: UserItemProps) {
+  return (
+    <div className="p-4 border rounded">
+      <h3>{name}</h3>
+      <p>{email}</p>
+    </div>
+  );
+});
+```
+```

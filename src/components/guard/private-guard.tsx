@@ -1,9 +1,9 @@
 import { Navigate, Outlet, useLocation } from 'react-router'
-import { Loading } from '../common/loading'
+import { Loading } from '@/components/common'
 import { RoutePaths } from '@/constants'
 import { useAuthContext } from '@/providers/auth'
 
-function PrivateGuard() {
+export function PrivateGuard() {
   const location = useLocation()
   const { authenticated, loading } = useAuthContext()
 
@@ -16,5 +16,3 @@ function PrivateGuard() {
 
   return <Outlet />
 }
-
-export default PrivateGuard

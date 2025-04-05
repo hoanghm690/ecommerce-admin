@@ -1,0 +1,161 @@
+---
+description: 
+globs: 
+---
+ ```markdown
+# File Structure Guidelines
+
+This project follows a specific file structure to maintain organization and scalability. All file and folder names in the `src` directory should follow kebab-case naming convention.
+
+## Directory Structure
+
+```
+src/
+├── app/                # Application initialization and global configurations
+├── assets/             # Static assets like images, fonts, etc.
+├── components/         # Reusable UI components
+│   ├── ui/             # Shadcn UI components and other basic UI elements
+│   └── [feature-name]/ # Feature-specific components
+├── constants/          # Application constants and enums
+├── features/           # Feature-specific modules
+│   └── [feature-name]/ # Components, hooks, utils for specific features
+├── hooks/              # Custom React hooks
+├── layouts/            # Layout components for pages
+├── lib/                # Third-party library configurations
+├── pages/              # Page components
+├── providers/          # Context providers
+└── utils/              # Utility functions
+```
+
+## File Naming Conventions
+
+- All files and directories in `src` should use kebab-case
+- Component files should have the `.tsx` extension
+- Utility files should have the `.ts` extension
+- Test files should have the `.test.ts` or `.test.tsx` extension
+- Style files should have the `.css` extension
+
+Examples:
+- `user-profile.tsx`
+- `auth-context.ts`
+- `data-table.tsx`
+- `use-local-storage.ts`
+- `format-date.ts`
+
+## Component File Organization
+
+Each component file should follow this structure:
+
+1. Imports
+2. Type definitions (interfaces/types)
+3. Helper functions (if specific to this component)
+4. Component definition
+5. Exports
+
+Example:
+
+```tsx
+// src/components/user/user-card.tsx
+import { useState } from "react";
+import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { formatDate } from "@/utils/format-date";
+
+// Type definitions
+interface UserCardProps {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  lastActive?: Date;
+  avatar?: string;
+  onEdit?: (id: string) => void;
+}
+
+// Component definition
+export function UserCard({
+  id,
+  name,
+  email,
+  role,
+  lastActive,
+  avatar,
+  onEdit,
+}: UserCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  // Component logic and rendering
+  return (
+    <Card className="p-4">
+      {/* Component content */}
+    </Card>
+  );
+}
+```
+
+## Feature Organization
+
+Features should be organized in a modular way to promote reusability and maintainability:
+
+```
+src/features/authentication/
+├── components/         # Components specific to authentication
+│   ├── login-form.tsx
+│   ├── signup-form.tsx
+│   └── password-reset-form.tsx
+├── hooks/              # Hooks specific to authentication
+│   ├── use-auth.ts
+│   └── use-login.ts
+├── api/                # API functions for authentication
+│   └── auth-service.ts
+├── types/              # Type definitions
+│   └── auth-types.ts
+└── utils/              # Utility functions
+    └── token-storage.ts
+```
+
+## Index Files
+
+Use index files to re-export components for cleaner imports:
+
+```ts
+// src/components/ui/index.ts
+export * from "./button";
+export * from "./card";
+export * from "./input";
+// ...
+
+// Usage in other files
+import { Button, Card, Input } from "@/components/ui";
+```
+
+## Absolute Imports
+
+Use absolute imports with the `@/` prefix to make imports more readable and avoid relative path complexity:
+
+```tsx
+// Good
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/use-auth";
+
+// Avoid
+import { Button } from "../../../components/ui/button";
+import { cn } from "../../lib/utils";
+import { useAuth } from "../hooks/use-auth";
+```
+
+## Configuration Files
+
+- Place global configuration files in the `src/app` or `src/lib` directory
+- Use TypeScript for configuration files to ensure type safety
+- Document the purpose and usage of configuration files
+
+## Test Files
+
+- Place test files alongside the files they test
+- Use the same naming convention as the file being tested, with `.test.ts` or `.test.tsx` extension
+- Organize test files in a way that mirrors the structure of the source code
+```

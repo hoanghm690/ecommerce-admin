@@ -12,7 +12,7 @@ export type ControlledSelectProps = ControlledInputProps & {
   options: SelectOption[]
 }
 
-function ControlledSelect({ name, label, placeholder, description, disabled, options }: ControlledSelectProps) {
+export function ControlledSelect({ name, label, placeholder, description, disabled, options }: ControlledSelectProps) {
   const { control } = useFormContext()
 
   return (
@@ -43,5 +43,3 @@ function ControlledSelect({ name, label, placeholder, description, disabled, opt
     />
   )
 }
-
-export default ControlledSelect

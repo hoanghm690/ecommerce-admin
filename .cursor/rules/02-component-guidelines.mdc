@@ -1,0 +1,106 @@
+---
+description: 
+globs: 
+---
+ ```markdown
+# Component Guidelines
+
+When working with React components in this project, follow these specific guidelines:
+
+## Component Structure
+
+- Use functional components with hooks, not class components
+- Export components as named exports, not default exports
+- Keep components small and focused on a single responsibility
+- Use TypeScript interfaces to define component props
+
+```tsx
+// Example component structure
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+
+interface UserCardProps {
+  name: string;
+  email: string;
+  role: string;
+  avatar?: string;
+  onEdit?: () => void;
+}
+
+export function UserCard({ 
+  name, 
+  email, 
+  role, 
+  avatar, 
+  onEdit 
+}: UserCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  return (
+    <div className={cn(
+      "rounded-md border p-4",
+      isExpanded && "pb-6"
+    )}>
+      {/* Component content */}
+    </div>
+  );
+}
+```
+
+## File Organization
+
+- Place components in the appropriate directory based on their purpose:
+  - `/src/components/ui`: UI primitives and basic components
+  - `/src/components/[feature-name]`: Feature-specific components
+  - `/src/features/[feature-name]/components`: Feature-specific components
+  - `/src/pages`: Page components
+  - `/src/layouts`: Layout components
+
+- Use index.ts files to re-export components for cleaner imports
+
+```ts
+// src/components/ui/index.ts
+export * from './button';
+export * from './card';
+export * from './input';
+// ...
+```
+
+## Props and State
+
+- Use destructuring for props
+- Define explicit prop types with TypeScript interfaces
+- Use default prop values when appropriate
+- Keep state minimal and local when possible
+- Use custom hooks for complex state logic
+- Prefer controlled components over uncontrolled ones
+
+## Styling
+
+- Use Tailwind CSS for styling
+- Use the `cn` utility from `src/lib/utils.ts` for conditional class names
+- Follow the project's design system and spacing guidelines
+- Use Shadcn UI components and extend them with custom styles when needed
+
+## Performance
+
+- Memoize expensive calculations with useMemo
+- Use useCallback for functions passed as props
+- Keep re-renders to a minimum
+- Use proper dependency arrays in useEffect, useMemo, and useCallback
+
+## Accessibility
+
+- Ensure all components are keyboard navigable
+- Use semantic HTML elements
+- Add appropriate aria attributes
+- Test with screen readers
+- Follow WCAG guidelines
+
+## Error Handling
+
+- Use error boundaries for component-level error handling
+- Provide fallback UI for error states
+- Handle loading and empty states gracefully
+```

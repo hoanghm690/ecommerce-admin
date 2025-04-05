@@ -1,6 +1,7 @@
+import React from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { flexRender, Row } from '@tanstack/react-table'
-import { TableCell, TableRow } from '../ui/table'
+import { TableCell, TableRow } from '@/components/ui'
 import { CSS } from '@dnd-kit/utilities'
 import { UniqueIdentifier } from '@dnd-kit/core'
 

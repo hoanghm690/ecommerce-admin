@@ -1,0 +1,166 @@
+---
+description: 
+globs: 
+---
+ ```markdown
+# Shadcn UI Usage Guidelines
+
+This project uses Shadcn UI, a collection of reusable components built on top of Radix UI primitives and styled with Tailwind CSS.
+
+## General Usage
+
+- Import Shadcn UI components from `@/components/ui`
+- Use the `cn` utility from `@/lib/utils` for combining Tailwind classes
+- Follow the component API as documented in the Shadcn UI documentation
+
+## Example Usage
+
+```tsx
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+
+export function LoginForm() {
+  return (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <label htmlFor="email" className="text-sm font-medium">Email</label>
+        <Input id="email" type="email" placeholder="Enter your email" />
+      </div>
+      <div className="space-y-2">
+        <label htmlFor="password" className="text-sm font-medium">Password</label>
+        <Input id="password" type="password" placeholder="Enter your password" />
+      </div>
+      <Button className="w-full">Sign In</Button>
+    </div>
+  );
+}
+```
+
+## Component Customization
+
+- Use the `className` prop to add additional styles to components
+- Use the available variants and sizes for components that support them
+- Create composition components when needed to maintain consistency
+
+```tsx
+import { Button, ButtonProps } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { IconType } from "react-icons";
+
+interface IconButtonProps extends ButtonProps {
+  icon: IconType;
+}
+
+export function IconButton({ icon: Icon, className, ...props }: IconButtonProps) {
+  return (
+    <Button 
+      className={cn("flex items-center gap-2", className)} 
+      {...props}
+    >
+      <Icon className="h-4 w-4" />
+      {props.children}
+    </Button>
+  );
+}
+```
+
+## Form Components
+
+- Use React Hook Form with Zod for form validation
+- Use Shadcn UI form components for consistent styling
+- Group related form fields logically
+
+```tsx
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+const formSchema = z.object({
+  username: z.string().min(2).max(50),
+  email: z.string().email(),
+});
+
+export function ProfileForm() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Handle form submission
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="Username" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Save Changes</Button>
+      </form>
+    </Form>
+  );
+}
+```
+
+## Component Library Extension
+
+When extending the component library:
+
+1. Follow the same patterns as existing components
+2. Maintain accessibility
+3. Use consistent naming conventions
+4. Document the component's API
+5. Use TypeScript for type safety
+
+## Dialog and Modals
+
+- Use the Dialog component for modals
+- Keep dialog content focused and minimal
+- Provide clear actions and close buttons
+- Handle keyboard interactions properly
+
+## Data Display Components
+
+- Use the appropriate component for the data type:
+  - Table for tabular data
+  - Card for entity information
+  - List for sequential items
+  - Stats for numerical data
+
+## Responsive Design
+
+- Use the responsive variants in Tailwind (`sm:`, `md:`, `lg:`, etc.)
+- Test components across different screen sizes
+- Use appropriate layout components for responsive behavior
+```
