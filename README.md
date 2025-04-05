@@ -120,6 +120,7 @@ Make sure you have the following installed on your system:
     ```sh
     npm install
     ```
+    _If you encounter package conflict errors (e.g., related to peer dependencies), you might need to run `npm install --force` or `npm install --legacy-peer-deps`._
 3.  **Set up environment variables:**
     - Copy the example environment file:
       ```sh
