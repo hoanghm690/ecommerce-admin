@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { User } from '@/lib/apis/users'
-import { AuthContext, AuthProvider } from '.'
+
 import { StorageKey } from '@/constants'
+import { User } from '@/lib/apis/users'
+
+import { AuthContext, AuthProvider } from '.'
 
 const AuthContextProvider: React.FC<{
   authProvider: AuthProvider

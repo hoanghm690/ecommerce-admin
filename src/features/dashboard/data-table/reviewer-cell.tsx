@@ -1,6 +1,7 @@
 import { Row } from '@tanstack/react-table'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+
+import { Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components'
+
 import { DashboardType } from '.'
 
 export function ReviewerCell({ row }: { row: Row<DashboardType> }) {

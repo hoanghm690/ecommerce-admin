@@ -1,7 +1,7 @@
+import { StorageKey } from '@/constants'
 import { User } from '@/lib/apis/users'
 
 import { AuthProvider, LoginPayload } from './types'
-import { StorageKey } from '@/constants'
 
 export const authProvider: AuthProvider = {
   login: async (_payload: LoginPayload) => {

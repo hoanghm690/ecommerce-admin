@@ -1,7 +1,8 @@
 import { Navigate } from 'react-router'
-import { Loading } from '@/components/common'
+
+import { Loading } from '@/components'
 import { RoutePaths } from '@/constants'
-import { useAuthContext } from '@/providers/auth'
+import { useAuthContext } from '@/providers'
 
 export function AuthCheckingGuard() {
   const { authenticated, loading } = useAuthContext()

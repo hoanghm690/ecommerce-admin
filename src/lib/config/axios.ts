@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
+
 import { EnvConfig, RoutePaths, StorageKey } from '@/constants'
 
 export type Params = Record<string, unknown>

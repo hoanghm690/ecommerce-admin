@@ -1,12 +1,13 @@
 import { IconDotsVertical } from '@tabler/icons-react'
-import { Button } from '@/components/ui/button'
+
 import {
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
+} from '@/components'
 
 export function ActionsCell() {
   return (

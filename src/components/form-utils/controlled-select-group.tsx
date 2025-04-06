@@ -1,15 +1,22 @@
 import { useFormContext } from 'react-hook-form'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+
 import {
+  ControlledSelectProps,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectLabel,
+  SelectOption,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/select'
-import { ControlledSelectProps, SelectOption } from './controlled-select'
+} from '@/components'
 
 export type SelectGroupOption = {
   group: string

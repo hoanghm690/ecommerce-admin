@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {
   AudioWaveform,
   BookOpen,
@@ -11,12 +10,14 @@ import {
   Settings2,
   SquareTerminal
 } from 'lucide-react'
+import * as React from 'react'
 
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/components/ui'
-import { TeamSwitcher } from './team-switcher'
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/components'
+
 import { NavMain } from './nav-main'
 import { NavProjects } from './nav-projects'
 import { NavUser } from './nav-user'
+import { TeamSwitcher } from './team-switcher'
 
 // This is sample data.
 const data = {

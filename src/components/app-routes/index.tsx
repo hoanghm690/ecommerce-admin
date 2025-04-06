@@ -1,7 +1,7 @@
+import { ComponentType, lazy } from 'react'
 import { Route, Routes } from 'react-router'
-import { lazy, ComponentType } from 'react'
-import { ScrollTop } from '@/components/scroll-top'
-import { AuthCheckingGuard, PrivateGuard, PublicGuard } from '@/components/guard'
+
+import { AuthCheckingGuard, PrivateGuard, PublicGuard, ScrollTop } from '@/components'
 import { RoutePaths } from '@/constants'
 
 // Utility function to create a lazy component from a named export

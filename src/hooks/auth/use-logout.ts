@@ -1,4 +1,4 @@
-import { useAuthContext } from '@/providers/auth'
+import { useAuthContext } from '@/providers'
 
 export function useLogout() {
   const {

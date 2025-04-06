@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui'
 import { z } from 'zod'
-import { AppForm, ControlledInput } from '@/components/form-utils'
-import { useLogin } from '@/hooks/auth/use-login'
+
+import { AppForm, Card, CardContent, CardHeader, CardTitle, ControlledInput } from '@/components'
 import { AppMessages } from '@/constants'
+import { useLogin } from '@/hooks/auth/use-login'
 
 const loginFormSchema = z.object({
   email: z.string().min(1, { message: AppMessages.email.required }).email(AppMessages.email.invalid),

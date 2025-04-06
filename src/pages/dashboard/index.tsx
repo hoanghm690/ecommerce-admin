@@ -1,7 +1,5 @@
-import { ChartAreaInteractive } from '@/features/dashboard/chart-area-interactive'
-import { SectionCards } from '@/features/dashboard/section-cards'
 import data from '@/app/dashboard/data.json'
-import { DashboardDataTable } from '@/features/dashboard/data-table'
+import { ChartAreaInteractive, DashboardDataTable, SectionCards } from '@/features/dashboard'
 
 export function Dashboard() {
   return (

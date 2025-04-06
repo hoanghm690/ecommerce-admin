@@ -2,8 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ReactNode } from 'react'
 import { DefaultValues, FieldValues, SubmitHandler, useForm, UseFormReturn } from 'react-hook-form'
 import { ZodType, ZodTypeDef } from 'zod'
-import { Form } from '@/components/ui'
-import { LoadingButton, LoadingButtonProps } from '@/components/common'
+
+import { Form, LoadingButton, LoadingButtonProps } from '@/components'
 
 interface AppFormProps<T extends FieldValues> {
   schema: ZodType<T, ZodTypeDef, T>

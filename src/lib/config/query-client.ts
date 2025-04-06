@@ -1,5 +1,6 @@
-import { RoutePaths, StorageKey } from '@/constants'
 import { keepPreviousData, QueryClient } from '@tanstack/react-query'
+
+import { RoutePaths, StorageKey } from '@/constants'
 
 export const queryClient = new QueryClient({
   defaultOptions: {

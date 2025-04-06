@@ -1,14 +1,13 @@
-import * as React from 'react'
 import {
+  closestCenter,
   DndContext,
+  type DragEndEvent,
   KeyboardSensor,
   MouseSensor,
   TouchSensor,
-  closestCenter,
+  type UniqueIdentifier,
   useSensor,
-  useSensors,
-  type DragEndEvent,
-  type UniqueIdentifier
+  useSensors
 } from '@dnd-kit/core'
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
 import { arrayMove } from '@dnd-kit/sortable'
@@ -16,29 +15,37 @@ import { IconChevronDown, IconLayoutColumns, IconPlus } from '@tabler/icons-reac
 import {
   ColumnDef,
   ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   getCoreRowModel,
   getFacetedRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  useReactTable
+  SortingState,
+  useReactTable,
+  VisibilityState
 } from '@tanstack/react-table'
-
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import * as React from 'react'
 
 import {
+  Badge,
+  Button,
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+  DropdownMenuTrigger,
+  Label,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from '@/components'
+
 import { GenericTable, PaginationControls } from '.'
 
 interface DataTableProps<T> {

@@ -85,13 +85,13 @@ function DrawerDescription({ className, ...props }: React.ComponentProps<typeof 
 
 export {
   Drawer,
-  DrawerPortal,
-  DrawerOverlay,
-  DrawerTrigger,
   DrawerClose,
   DrawerContent,
-  DrawerHeader,
+  DrawerDescription,
   DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerPortal,
   DrawerTitle,
-  DrawerDescription
+  DrawerTrigger
 }

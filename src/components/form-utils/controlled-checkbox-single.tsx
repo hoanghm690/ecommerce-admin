@@ -1,7 +1,15 @@
 import { useFormContext } from 'react-hook-form'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Checkbox } from '@/components/ui'
-import { ControlledInputProps } from './controlled-input'
+
+import {
+  Checkbox,
+  ControlledInputProps,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components'
 
 type ControlledCheckboxSingleProps = Omit<ControlledInputProps, 'placeholder'>
 

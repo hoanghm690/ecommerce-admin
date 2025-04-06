@@ -1,5 +1,6 @@
 import { FallbackProps } from 'react-error-boundary'
-import { Button } from '@/components/ui'
+
+import { Button } from '@/components'
 
 export function ErrorFallback({ resetErrorBoundary }: FallbackProps) {
   return (

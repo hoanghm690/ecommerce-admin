@@ -1,8 +1,7 @@
 import { Suspense } from 'react'
-import { Loading } from '@/components/common'
+
+import { AppRoutes, Loading, QueryErrorResetBoundary } from '@/components'
 import AppProviders from '@/providers'
-import { AppRoutes } from '@/components/app-routes'
-import { QueryErrorResetBoundary } from '@/components/query-error-reset-boundary'
 
 export function App() {
   return (

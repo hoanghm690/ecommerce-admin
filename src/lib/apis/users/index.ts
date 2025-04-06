@@ -1,6 +1,6 @@
 import { UsersApi } from './service'
 
-export * from './types'
 export * from './service'
+export * from './types'
 
 export const usersApi = new UsersApi()

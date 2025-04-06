@@ -1,5 +1,6 @@
-import { DashboardType } from '@/features/dashboard/data-table'
-import { DrawerViewer } from '@/components/common/drawer-viewer'
+import { DrawerViewer } from '@/components'
+import { DashboardType } from '@/features/dashboard'
+
 import { ChartAreaInteractive, Form } from './components'
 
 export function TableCellViewer({ item }: { item: DashboardType }) {

@@ -1,9 +1,10 @@
-import { LoginFormType } from '@/pages/login'
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
-import { RoutePaths } from '@/constants'
-import { useAuthContext } from '@/providers/auth'
 import { toast } from 'sonner'
+
+import { RoutePaths } from '@/constants'
+import { LoginFormType } from '@/pages'
+import { useAuthContext } from '@/providers'
 
 export function useLogin() {
   const {

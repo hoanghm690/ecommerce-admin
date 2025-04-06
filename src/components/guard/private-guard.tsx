@@ -1,7 +1,8 @@
 import { Navigate, Outlet, useLocation } from 'react-router'
-import { Loading } from '@/components/common'
+
+import { Loading } from '@/components'
 import { RoutePaths } from '@/constants'
-import { useAuthContext } from '@/providers/auth'
+import { useAuthContext } from '@/providers'
 
 export function PrivateGuard() {
   const location = useLocation()

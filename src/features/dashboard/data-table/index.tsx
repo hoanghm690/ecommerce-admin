@@ -1,9 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table'
-import { Badge } from '@/components/ui/badge'
-import { Checkbox } from '@/components/ui/checkbox'
-import { DataTable } from '@/components/table'
-import { TableCellViewer } from '@/features/dashboard/table-cell-viewer'
-import { DragHandle, ActionsCell, ReviewerCell, LimitCell, TargetCell, StatusCell } from './components'
+
+import { Badge, Checkbox, DataTable } from '@/components'
+import { TableCellViewer } from '@/features/dashboard'
+
+import { ActionsCell, DragHandle, LimitCell, ReviewerCell, StatusCell, TargetCell } from './components'
 
 export type DashboardType = {
   id: number

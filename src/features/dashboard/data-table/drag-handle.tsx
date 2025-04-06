@@ -1,6 +1,7 @@
-import { Button } from '@/components/ui/button'
 import { useSortable } from '@dnd-kit/sortable'
 import { IconGripVertical } from '@tabler/icons-react'
+
+import { Button } from '@/components'
 
 export function DragHandle({ id }: { id: number }) {
   const { attributes, listeners } = useSortable({

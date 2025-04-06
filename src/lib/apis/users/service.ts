@@ -1,5 +1,6 @@
-import { HttpClient } from '@/lib/config/axios'
 import { ApiEndpoint } from '@/constants'
+import { HttpClient } from '@/lib/config/axios'
+
 import { User } from './types'
 
 export class UsersApi {

@@ -1,8 +1,9 @@
-import { useTheme } from '@/providers/theme-provider'
-import { Toaster as Sonner, ToasterProps } from 'sonner'
 import { HiMiniCheckCircle } from 'react-icons/hi2'
+import { IoIosInformationCircle, IoIosWarning } from 'react-icons/io'
 import { RiErrorWarningFill } from 'react-icons/ri'
-import { IoIosWarning, IoIosInformationCircle } from 'react-icons/io'
+import { Toaster as Sonner, ToasterProps } from 'sonner'
+
+import { useTheme } from '@/providers'
 
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme } = useTheme()

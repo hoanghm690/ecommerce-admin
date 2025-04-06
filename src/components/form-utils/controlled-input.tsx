@@ -1,5 +1,6 @@
 import { useFormContext } from 'react-hook-form'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input } from '@/components/ui'
+
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Input } from '@/components'
 
 export interface ControlledInputProps {
   name: string

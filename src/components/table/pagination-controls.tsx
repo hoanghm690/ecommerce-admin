@@ -1,8 +1,7 @@
 import { IconChevronLeft, IconChevronRight, IconChevronsLeft, IconChevronsRight } from '@tabler/icons-react'
 import { Table } from '@tanstack/react-table'
-import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+
+import { Button, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components'
 
 export function PaginationControls<T>({ table }: { table: Table<T> }) {
   return (
@@ -44,37 +43,34 @@ export function PaginationControls<T>({ table }: { table: Table<T> }) {
             disabled={!table.getCanPreviousPage()}
           >
             <span className='sr-only'>Go to first page</span>
-            <IconChevronsLeft />
+            <IconChevronsLeft className='h-4 w-4' />
           </Button>
           <Button
             variant='outline'
-            className='size-8'
-            size='icon'
+            className='h-8 w-8 p-0'
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
             <span className='sr-only'>Go to previous page</span>
-            <IconChevronLeft />
+            <IconChevronLeft className='h-4 w-4' />
           </Button>
           <Button
             variant='outline'
-            className='size-8'
-            size='icon'
+            className='h-8 w-8 p-0'
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
             <span className='sr-only'>Go to next page</span>
-            <IconChevronRight />
+            <IconChevronRight className='h-4 w-4' />
           </Button>
           <Button
             variant='outline'
-            className='hidden size-8 lg:flex'
-            size='icon'
+            className='hidden h-8 w-8 p-0 lg:flex'
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >
             <span className='sr-only'>Go to last page</span>
-            <IconChevronsRight />
+            <IconChevronsRight className='h-4 w-4' />
           </Button>
         </div>
       </div>

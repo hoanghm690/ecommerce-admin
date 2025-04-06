@@ -1,10 +1,9 @@
-import { AppSidebar } from '@/components'
-import { ModeToggle, SiteHeader } from '@/components/common'
-import { SidebarInset } from '@/components/ui'
-import { SIDEBAR_COOKIE_NAME } from '@/constants'
-import { SidebarProvider } from '@/providers/sidebar-provider'
 import { useState } from 'react'
 import { Outlet } from 'react-router'
+
+import { AppSidebar, ModeToggle, SidebarInset, SiteHeader } from '@/components'
+import { SIDEBAR_COOKIE_NAME } from '@/constants'
+import { SidebarProvider } from '@/providers'
 
 const getCookieValue = (name: string, defaultValue = true) => {
   if (typeof document === 'undefined') return defaultValue

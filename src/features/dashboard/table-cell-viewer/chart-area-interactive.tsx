@@ -1,8 +1,8 @@
-import { useIsMobile } from '@/hooks/common/use-mobile'
 import { IconTrendingUp } from '@tabler/icons-react'
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts'
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
-import { Separator } from '@/components/ui/separator'
+
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, Separator } from '@/components'
+import { useIsMobile } from '@/hooks/common/use-mobile'
 
 const chartData = [
   { month: 'January', desktop: 186, mobile: 80 },

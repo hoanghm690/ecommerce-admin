@@ -1,8 +1,10 @@
 import { ReactNode } from 'react'
+
+import { Toaster } from '@/components'
+
+import { AuthContextProvider, authProvider } from './auth'
 import { ReactQueryProvider } from './react-query-provider'
 import { ThemeProvider } from './theme-provider'
-import { Toaster } from '@/components/ui/sonner'
-import { AuthContextProvider, authProvider } from './auth'
 
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
@@ -23,5 +25,5 @@ export default AppProviders
 // Re-export all providers
 export * from './auth'
 export * from './react-query-provider'
-export * from './theme-provider'
 export * from './sidebar-provider'
+export * from './theme-provider'

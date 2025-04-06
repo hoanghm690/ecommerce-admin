@@ -1,9 +1,10 @@
 import { createContext, useContext } from 'react'
+
 import { AuthContextType } from './types'
 
 export * from './context'
-export * from './types'
 export * from './provider'
+export * from './types'
 
 export const AuthContext = createContext<AuthContextType | null>(null)
 export const useAuthContext = () => {

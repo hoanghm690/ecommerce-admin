@@ -1,7 +1,9 @@
 import { ChevronRight, type LucideIcon } from 'lucide-react'
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
@@ -10,7 +12,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem
-} from '@/components/ui/sidebar'
+} from '@/components'
 
 export function NavMain({
   items

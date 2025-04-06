@@ -5,6 +5,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import pluginQuery from '@tanstack/eslint-plugin-query'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
 
 export default tseslint.config(
   { ignores: ['dist', 'vite.config.ts'] },
@@ -19,11 +20,14 @@ export default tseslint.config(
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       prettier: eslintPluginPrettier,
-      '@tanstack/query': pluginQuery
+      '@tanstack/query': pluginQuery,
+      'simple-import-sort': simpleImportSort
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
       ...pluginQuery.configs.recommended.rules,
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'prettier/prettier': [
         'warn',

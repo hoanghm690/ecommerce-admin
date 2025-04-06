@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { useIsMobile } from '@/hooks/common/use-mobile'
-import { cn } from '@/lib/utils'
-import { TooltipProvider } from '@/components/ui/tooltip'
+
+import { TooltipProvider } from '@/components'
 import {
   SIDEBAR_COOKIE_MAX_AGE,
   SIDEBAR_COOKIE_NAME,
@@ -9,6 +8,8 @@ import {
   SIDEBAR_WIDTH,
   SIDEBAR_WIDTH_ICON
 } from '@/constants'
+import { useIsMobile } from '@/hooks/common/use-mobile'
+import { cn } from '@/lib/utils'
 
 type SidebarContextProps = {
   state: 'expanded' | 'collapsed'

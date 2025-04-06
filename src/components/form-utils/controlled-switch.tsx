@@ -1,7 +1,15 @@
 import { useFormContext } from 'react-hook-form'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Switch } from '@/components/ui'
-import { ControlledInputProps } from './controlled-input'
+
+import {
+  ControlledInputProps,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Switch
+} from '@/components'
 
 type ControlledSwitchProps = Omit<ControlledInputProps, 'placeholder'>
 

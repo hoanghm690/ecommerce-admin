@@ -1,6 +1,8 @@
-import { DashboardType } from '.'
-import { Badge } from '@/components/ui/badge'
 import { IconCircleCheckFilled, IconLoader } from '@tabler/icons-react'
+
+import { Badge } from '@/components'
+
+import { DashboardType } from '.'
 
 export function StatusCell({ status }: Pick<DashboardType, 'status'>) {
   return (

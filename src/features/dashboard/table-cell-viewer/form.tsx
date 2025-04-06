@@ -1,7 +1,5 @@
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { DashboardType } from '@/features/dashboard/data-table'
+import { Input, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components'
+import { DashboardType } from '@/features/dashboard'
 
 export function Form({ item }: { item: DashboardType }) {
   return (
