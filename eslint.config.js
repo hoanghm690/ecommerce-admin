@@ -1,61 +1,60 @@
-import eslintPluginPrettier from 'eslint-plugin-prettier'
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import pluginQuery from '@tanstack/eslint-plugin-query'
-import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import eslintPluginPrettier from "eslint-plugin-prettier";
+import js from "@eslint/js";
+import globals from "globals";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import tseslint from "typescript-eslint";
+import pluginQuery from "@tanstack/eslint-plugin-query";
 
 export default tseslint.config(
-  { ignores: ['dist', 'vite.config.ts'] },
+  { ignores: ["dist", "vite.config.ts"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
+    files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser
+      globals: globals.browser,
     },
     plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
       prettier: eslintPluginPrettier,
-      '@tanstack/query': pluginQuery,
-      'simple-import-sort': simpleImportSort
+      "@tanstack/query": pluginQuery,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
       ...pluginQuery.configs.recommended.rules,
-      'simple-import-sort/imports': 'error',
-      'simple-import-sort/exports': 'error',
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'prettier/prettier': [
-        'warn',
+      "react-refresh/only-export-components": [
+        "warn",
+        { allowConstantExport: true },
+      ],
+      "prettier/prettier": [
+        "warn",
         {
-          arrowParens: 'always',
+          arrowParens: "always",
           semi: false,
-          trailingComma: 'none',
+          trailingComma: "none",
           tabWidth: 2,
-          endOfLine: 'auto',
+          endOfLine: "auto",
           useTabs: false,
           singleQuote: true,
           printWidth: 120,
-          jsxSingleQuote: true
-        }
+          jsxSingleQuote: true,
+        },
       ],
-      '@typescript-eslint/no-unused-vars': [
-        'error',
+      "@typescript-eslint/no-unused-vars": [
+        "error",
         {
-          args: 'all',
-          argsIgnorePattern: '^_',
-          caughtErrors: 'all',
-          caughtErrorsIgnorePattern: '^_',
-          destructuredArrayIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          ignoreRestSiblings: true
-        }
+          args: "all",
+          argsIgnorePattern: "^_",
+          caughtErrors: "all",
+          caughtErrorsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          ignoreRestSiblings: true,
+        },
       ],
-      '@typescript-eslint/no-explicit-any': 'warn'
-    }
+      "@typescript-eslint/no-explicit-any": "warn",
+    },
   }
-)
+);

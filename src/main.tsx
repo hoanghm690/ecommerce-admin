@@ -1,3 +1,5 @@
+import '@/lib/config/i18n'
+
 import './index.css'
 
 import { NuqsAdapter } from 'nuqs/adapters/react'

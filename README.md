@@ -8,8 +8,8 @@
   <p align="center">
     React Admin Dashboard Starter Template With Shadcn-ui, built with the Vite + React Ts
     <br />
-    <a href="https://github.com/hoanghm690/ecommerce-admin"><strong>Explore the docs »</strong></a>
     <br />
+    <a href="https://github.com/hoanghm690/ecommerce-admin"><strong>Explore the docs »</strong></a>
     <br />
     <a href="https://github.com/hoanghm690/ecommerce-admin">View Demo</a>
     &middot;
@@ -38,14 +38,14 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
@@ -102,12 +102,10 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-Make sure you have the following installed on your system:
+Before you continue, ensure you meet the following requirements:
 
-- **[Node.js](https://nodejs.org/)**: >= v18.0.0 (LTS recommended). Node.js includes `npm` (Node Package Manager).
-  _You can verify your installation by running `node -v` and `npm -v` in your terminal._
-- **[Git](https://git-scm.com/)**: Required for cloning the repository.
-  _You can verify your installation by running `git --version` in your terminal._
+- You have installed the latest version of **Node.js** and **npm**.
+- You have an understanding of **React** and **TypeScript**.
 
 ### Installation
 
@@ -141,3 +139,27 @@ git remote -v # Verify the change
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- USAGE EXAMPLES -->
+
+## Usage
+
+Here you can show some basic usage examples of your project.
+
+### Example 1: Navigating the Admin Panel
+
+- After running the app, navigate to `http://localhost:5173` to access the admin panel.
+- You will see a dashboard that gives you an overview of user activity, project stats, and other key metrics.
+
+### Example 2: Adding New Data
+
+- In the admin panel, go to the "Data Management" section.
+- Click on "Add New Data", fill out the form, and submit. Your new data will be reflected in the database and updated in the dashboard.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- ACKNOWLEDGMENTS -->
+
+## Acknowledgments
+
+- Thank you!

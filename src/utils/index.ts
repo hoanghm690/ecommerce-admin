@@ -1,2 +1,2 @@
-// Re-export utility functions
 export * from './string'
+export * from './lazy-import'

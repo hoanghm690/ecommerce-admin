@@ -1,16 +1,13 @@
-import { ComponentType, lazy } from 'react'
 import { Route, Routes } from 'react-router'
 
-import { AuthCheckingGuard, PrivateGuard, PublicGuard, ScrollTop } from '@/components'
+import { ScrollTop } from '@/components'
+import { lazyImport } from '@/utils'
 import { RoutePaths } from '@/constants'
 
-// Utility function to create a lazy component from a named export
-const lazyImport = <T extends ComponentType<any>>(moduleImport: Promise<{ [key: string]: T }>, name: string) =>
-  lazy(() =>
-    moduleImport.then((module) => ({
-      default: module[name]
-    }))
-  )
+// Import guards
+const AuthCheckingGuard = lazyImport(import('@/components/guard'), 'AuthCheckingGuard')
+const PrivateGuard = lazyImport(import('@/components/guard'), 'PrivateGuard')
+const PublicGuard = lazyImport(import('@/components/guard'), 'PublicGuard')
 
 // Import layouts
 const AdminLayout = lazyImport(import('@/layouts'), 'AdminLayout')
