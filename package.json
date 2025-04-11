@@ -12,7 +12,8 @@
     "prettier": "prettier --check \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",
     "prettier:fix": "prettier --write \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",
     "prepare": "husky && husky install",
-    "changelog": "git log --pretty=format:\"* %s (%h)\" --reverse"
+    "changelog": "git log --pretty=format:\"* %s (%h)\" --reverse",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
